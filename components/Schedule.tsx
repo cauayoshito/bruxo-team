@@ -16,7 +16,7 @@ const DAYS: { key: DayKey; label: string }[] = [
   { key: "sab", label: "SÁB" },
 ];
 
-export function Schedule({ title, data }: Props) {
+function Schedule({ title, data }: Props) {
   return (
     <section className="section">
       <div className="container">
@@ -32,7 +32,9 @@ export function Schedule({ title, data }: Props) {
                 )}
                 {data[key].map((s, i) => (
                   <li key={i} className="text-sm">
-                    <span className="inline-block font-medium mr-2">{s.title}</span>
+                    <span className="inline-block font-medium mr-2">
+                      {s.title}
+                    </span>
                     <span className="opacity-80">{s.time}</span>
                     {s.note && <span className="opacity-60"> — {s.note}</span>}
                   </li>
@@ -45,3 +47,6 @@ export function Schedule({ title, data }: Props) {
     </section>
   );
 }
+
+export default Schedule;      // <- default
+export { Schedule };          // <- opcional: também exporta nomeado
