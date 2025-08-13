@@ -14,18 +14,19 @@ export default function Page() {
       <Hero />
 
       <section id="unidades" className="container py-16 section">
-        <h2 className="h2">Nossas Unidades</h2
-
+        <h2 className="h2">Nossas Unidades</h2>
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           {UNITS.map((u) => (
             <UnitCard key={u.slug} unit={u} />
           ))}
         </div>
       </section>
+
       <About />
+
       <Schedule title="Bruxo Team — Stella" data={scheduleStella} />
-<div className="mt-12" />
-<Schedule title="Bruxo Team — Stiep" data={scheduleStiep} />
+      <div className="mt-12" />
+      <Schedule title="Bruxo Team — Stiep" data={scheduleStiep} />
 
       <Projects />
       <Testimonials />
