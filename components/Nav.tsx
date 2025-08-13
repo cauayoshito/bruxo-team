@@ -1,49 +1,61 @@
-'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Menu } from 'lucide-react';
-import { useState } from 'react';
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { Menu } from "lucide-react";
 
-const nav = [
+const links = [
   { href: "#unidades", label: "Unidades" },
-  { href: "#horarios",  label: "Horários" },
-  { href: "#projetos",  label: "Projetos Sociais" },
-  { href: "#contato",   label: "Contato" },
+  { href: "#horarios", label: "Horários" },
+  { href: "#projetos", label: "Projetos Sociais" },
+  { href: "#contato",  label: "Contato" },
 ];
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-background/70 border-b border-white/5">
-      <div className="container flex items-center justify-between h-16">
+    <header className="sticky top-0 z-50 backdrop-blur bg-background/80 border-b border-white/5">
+      <div className="container mx-auto h-16 px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <Image
-            src="/logo-bruxo.png"
-            alt="Bruxo Team"
-            width={36}
-            height={36}
-            className="rounded-full"
-            priority
-          />
-          <span className="font-extrabold text-lg tracking-wide">BRUXO TEAM</span>
+          {/* medalhão claro pra destacar a logo no dark */}
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white">
+            <Image
+              src="/logo-bruxo.png"
+              alt="Bruxo Team"
+              width={26}
+              height={26}
+              priority
+            />
+          </span>
+          <span className="font-extrabold tracking-wide">BRUXO TEAM</span>
         </Link>
 
-        <nav className="hidden md:flex gap-6">
-          {nav.map(i => (
-            <a key={i.href} href={i.href} className="text-sm text-muted hover:text-white">{i.label}</a>
+        <nav className="hidden md:flex items-center gap-6">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="text-sm text-white/80 hover:text-white">
+              {l.label}
+            </a>
           ))}
         </nav>
 
-        <button className="md:hidden btn btn-outline px-3" onClick={()=>setOpen(v=>!v)} aria-label="Menu">
-          <Menu className="h-5 w-5"/>
+        <button
+          className="md:hidden p-2 rounded-md border border-white/10"
+          onClick={() => setOpen(!open)}
+          aria-label="Abrir menu"
+        >
+          <Menu className="w-5 h-5" />
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-white/5">
-          <div className="container py-3 flex flex-col gap-3">
-            {nav.map(i => <a key={i.href} href={i.href} onClick={()=>setOpen(false)} className="text-sm">{i.label}</a>)}
+        <div className="md:hidden border-t border-white/10 bg-background/95">
+          <div className="container mx-auto px-4 py-3 flex flex-col gap-3">
+            {links.map((l) => (
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm">
+                {l.label}
+              </a>
+            ))}
           </div>
         </div>
       )}
