@@ -5,20 +5,27 @@ import Projects from "@/components/Projects";
 import Turmas from "@/components/Turmas";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import UNITS from "@/data/units";
+import { UNITS } from "@/data/units"; // <-- export nomeado correto
 
-export default function Page(){
+export default function Page() {
   return (
     <main>
       <Hero />
+
       <section id="unidades" className="container py-16">
         <h2 className="h2">Nossas Unidades</h2>
-        <p className="p mt-2">Escolha onde quer treinar — Stiep, Itapuã ou Stella.</p>
+        <p className="p mt-2">
+          Escolha onde quer treinar — Stiep, Itapuã ou Stella.
+        </p>
+
         <div className="mt-8 grid md:grid-cols-3 gap-6">
-          {units.map(u => <UnitCard key={u.slug} unit={u} />)}
+          {UNITS.map((u) => (
+            <UnitCard key={u.id} unit={u} /> {/* agora usa id */}
+          ))}
         </div>
       </section>
-      <Schedule units={units} />
+
+      <Schedule units={UNITS} /> {/* mesmo nome aqui */}
       <Turmas />
       <Projects />
       <Testimonials />
