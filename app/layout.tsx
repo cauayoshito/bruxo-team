@@ -12,12 +12,12 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Bruxo Team — Jiu-Jitsu em Salvador",
+  title: "Bruxo Team Jiu-Jitsu",
   description: "Treinos em Stiep, Itapuã e Stella. Disciplina, técnica e união.",
   openGraph: {
-    title: "Bruxo Team — Jiu-Jitsu",
+    title: "Bruxo Team Jiu-Jitsu",
     description: "Unidades em Stiep, Itapuã e Stella.",
-    images: ["/og.jpg"], // suba em /public/og.jpg
+    images: ["/logo-bruxo.png"], // suba em /public/og.jpg
     locale: "pt_BR",
     type: "website",
   },
