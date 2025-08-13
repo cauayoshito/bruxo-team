@@ -1,10 +1,15 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google"; // ← trocou Inter por Poppins
 import "./globals.css";
 import Nav from "@/components/Nav";
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
+// configura a fonte
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // escolha os pesos que quer usar
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Bruxo Team — Jiu-Jitsu em Salvador",
@@ -21,12 +26,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={inter.className}>
+    <html lang="pt-BR" className={poppins.className}> {/* ← aqui também trocou */}
       <body>
-        <a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 bg-white text-black px-3 py-2 rounded">
+        <a
+          href="#conteudo"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 bg-white text-black px-3 py-2 rounded"
+        >
           Pular para o conteúdo
         </a>
-        <Nav/>
+        <Nav />
         <main id="conteudo">{children}</main>
       </body>
     </html>
