@@ -4,7 +4,7 @@ import { useState } from "react";
 import clsx from "clsx";
 
 export default function Schedule({ units }: { units: Unit[] }) {
-  // usa 'id' (stiep | itapua | stella), não 'slug'
+  // usa 'id' (stiep | itapua | stella)
   const [active, setActive] = useState(units[0].id);
   const current = units.find((u) => u.id === active)!;
 
