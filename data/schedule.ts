@@ -70,3 +70,10 @@ export const scheduleStiep: GymSchedule = {
   sex: [],
   sab: [],
 };
+
+// ---------- MAPA DE HORÁRIOS POR UNIDADE ----------
+export const SCHEDULES_BY_UNIT: Record<string, GymSchedule | null> = {
+  stella: scheduleStella,
+  stiep: scheduleStiep,
+  itapua: null, // Quando tiver os horários de Itapuã, substitua o null pelo GymSchedule
+};
