@@ -1,3 +1,4 @@
+// app/unidades/[slug]/page.tsx
 import { Metadata } from "next";
 import { UNITS, UNITS_INDEX } from "@/data/units";
 import UnitHeader from "@/components/UnitHeader";
@@ -7,7 +8,10 @@ import UnitGallery from "@/components/UnitGallery";
 
 type Props = { params: { slug: string } };
 
-// gera rotas estáticas
+// (opcional) evita gerar rotas dinâmicas fora da lista
+export const dynamicParams = false;
+
+// Gera as rotas estáticas com base nas unidades
 export async function generateStaticParams() {
   return UNITS.map((u) => ({ slug: u.slug }));
 }
@@ -15,7 +19,9 @@ export async function generateStaticParams() {
 // SEO por unidade
 export function generateMetadata({ params }: Props): Metadata {
   const unit = UNITS_INDEX[params.slug];
-  if (!unit) return { title: "Bruxo Team" };
+  if (!unit) {
+    return { title: "Bruxo Team", description: "Unidade não encontrada." };
+  }
   return {
     title: unit.seo.title,
     description: unit.seo.description,
@@ -34,12 +40,19 @@ export default function UnitPage({ params }: Props) {
 
   return (
     <main>
+      {/* Hero / capa da unidade */}
       <UnitHeader unit={unit} />
+
+      {/* Instrutores responsáveis */}
       <UnitInstructors unit={unit} />
+
+      {/* Horários (puxa de SCHEDULES_BY_UNIT via UnitSchedule) */}
       <UnitSchedule unit={unit} />
+
+      {/* Galeria da unidade */}
       <UnitGallery unit={unit} />
 
-      {/* Mapa e endereço */}
+      {/* Endereço e mapa */}
       <section className="container py-12">
         <h2 className="h2">Endereço</h2>
         <p className="p mt-2">{unit.address}</p>
