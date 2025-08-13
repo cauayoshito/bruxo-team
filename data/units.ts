@@ -60,8 +60,8 @@ export const UNITS: UnitDetail[] = [
       // adicione linhas conforme o quadro
     ],
     gallery: [
-      '/units/stiep/gallery-1.jpg',
-      '/units/stiep/gallery-2.jpg',
+      '/stiep2.jpeg',
+      '/stiep.jpeg',
       '/units/stiep/gallery-3.jpg',
     ],
     seo: {
@@ -84,7 +84,7 @@ export const UNITS: UnitDetail[] = [
       {
         name: 'Lucas Ratto',
         role: 'Head Coach',
-        photo: '/instructors/tiago.jpg',
+        photo: '/ratto.jpeg',
       },
     ],
     schedule: [
@@ -93,8 +93,8 @@ export const UNITS: UnitDetail[] = [
       // ...
     ],
     gallery: [
-      '/units/itapua/gallery-1.jpg',
-      '/units/itapua/gallery-2.jpg',
+      '/itapua2.jpeg',
+      '/itapua.jpeg',
     ],
     seo: {
       title: 'Bruxo Team — Unidade Itapuã (Projeto Social)',
@@ -125,7 +125,7 @@ export const UNITS: UnitDetail[] = [
       {
         name: 'Tiago “Bruxo”',
         role: 'Head Coach',
-        photo: '/instructors/tiago.jpg',
+        photo: '/bruxo.jpeg',
       },
     ],
     schedule: [
@@ -137,8 +137,8 @@ export const UNITS: UnitDetail[] = [
       { day: 'seg', label: 'Mista', time: '20:15' },
     ],
     gallery: [
-      '/units/stella/gallery-1.jpg',
-      '/units/stella/gallery-2.jpg',
+      '/stella2.jpeg',
+      '/stella.jpeg',
       '/units/stella/gallery-3.jpg',
     ],
     seo: {
