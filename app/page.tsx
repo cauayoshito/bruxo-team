@@ -20,7 +20,7 @@ export default function Page() {
 
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           {UNITS.map((u) => (
-            <UnitCard key={u.id} unit={u} />
+            <UnitCard key={u.slug} unit={u} />
           ))}
         </div>
       </section>
