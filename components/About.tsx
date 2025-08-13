@@ -35,7 +35,7 @@ export default function About() {
         <div className="md:col-span-5">
           <div className="card overflow-hidden">
             <Image
-              src="/sobre-bruxo-team.png"   // coloque o nome correto do arquivo no /public
+              src="/bg.jpeg"   // coloque o nome correto do arquivo no /public
               alt="Sobre a Bruxo Team Jiu-Jitsu"
               width={900}
               height={1200}
