@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { UNITS } from "@/data/units";
+import { scheduleStella, scheduleStiep } from "@/data/schedule";
 
 export default function Page() {
   return (
@@ -25,7 +26,10 @@ export default function Page() {
         </div>
       </section>
       <About />
-      <Schedule units={UNITS} />
+      <Schedule title="Bruxo Team — Stella" data={scheduleStella} />
+<div className="mt-12" />
+<Schedule title="Bruxo Team — Stiep" data={scheduleStiep} />
+
       <Projects />
       <Testimonials />
       <Footer />
