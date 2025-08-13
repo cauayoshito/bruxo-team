@@ -49,7 +49,7 @@ export const UNITS: UnitDetail[] = [
         role: 'Head Coach',
         bio:
           'Professor desde 2019 à frente da equipe. Linha técnica, disciplina e formação humana.',
-        photo: '/instructors/tiago.jpg',
+        photo: '/ybere.jepg',
       },
     ],
     schedule: [
@@ -95,6 +95,7 @@ export const UNITS: UnitDetail[] = [
     gallery: [
       '/itapua2.jpeg',
       '/itapua.jpeg',
+      '/itapua3.jpeg',
     ],
     seo: {
       title: 'Bruxo Team — Unidade Itapuã (Projeto Social)',
