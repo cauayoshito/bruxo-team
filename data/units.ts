@@ -1,50 +1,155 @@
-export type Unit = {
-  id: "stiep" | "itapua" | "stella";
+// data/units.ts
+export type Instructor = {
   name: string;
-  address: string;
-  mapEmbed: string;
-  whatsapp: string;
-  image: string;
-  schedule?: { day: string; group: string; time: string }[]; // <- opcional pra não quebrar
+  role: string;
+  bio?: string;
+  photo: string; // /instructors/arquivo.jpg
 };
 
-export const UNITS: Unit[] = [
+export type DayKey = 'seg' | 'ter' | 'qua' | 'qui' | 'sex' | 'sab';
+
+export type ScheduleRow = {
+  day: DayKey;
+  label: string;   // "Mista", "Kids", "No-Gi", etc.
+  time: string;    // "06:00", "19:00-20:30"
+};
+
+export type UnitDetail = {
+  slug: 'stiep' | 'itapua' | 'stella';
+  name: string;
+  shortName: string;     // "Stiep"
+  whatsapp: string;      // "557199999999"
+  address: string;
+  mapQuery: string;      // usado no iframe Google Maps
+  heroImage: string;     // /units/slug/hero.jpg
+  description: string;   // texto sobre a unidade
+  instructors: Instructor[];
+  schedule: ScheduleRow[];
+  gallery: string[];     // imgs em /units/slug/...
+  seo: {
+    title: string;
+    description: string;
+  };
+};
+
+export const UNITS: UnitDetail[] = [
   {
-    id: "stiep",
-    name: "Unidade Stiep",
-    address: "Rua Arthur Fraga — Stiep, Salvador/BA",
-    mapEmbed:
-      "https://www.google.com/maps?q=Rua+Arthur+Fraga,+Stiep,+Salvador+BA&output=embed",
-    whatsapp: "5571999999999",
-    image: "/stiep.jpg",
-    schedule: [
-      { day: "Seg", group: "Iniciantes", time: "19:00–20:00" },
-      { day: "Qua", group: "Avançado", time: "19:00–20:30" },
+    slug: 'stiep',
+    name: 'Unidade Stiep',
+    shortName: 'Stiep',
+    whatsapp: '557199999999', // ajuste
+    address: 'Rua Arthur Fraga — Stiep, Salvador/BA',
+    mapQuery: 'Rua Arthur Fraga, Stiep, Salvador - BA',
+    heroImage: '/units/stiep/hero.jpg',
+    description:
+      'A unidade Stiep reúne treinos de base técnica forte e ritmo constante, ideal para iniciantes e avançados que buscam evolução consistente.',
+    instructors: [
+      {
+        name: 'Tiago “Bruxo”',
+        role: 'Head Coach',
+        bio:
+          'Professor desde 2019 à frente da equipe. Linha técnica, disciplina e formação humana.',
+        photo: '/instructors/tiago.jpg',
+      },
     ],
+    schedule: [
+      { day: 'seg', label: 'Mista', time: '06:00' },
+      { day: 'seg', label: 'Kids', time: '10:00' },
+      { day: 'qua', label: 'Mista', time: '12:00' },
+      { day: 'sex', label: 'Mista', time: '20:15' },
+      // adicione linhas conforme o quadro
+    ],
+    gallery: [
+      '/units/stiep/gallery-1.jpg',
+      '/units/stiep/gallery-2.jpg',
+      '/units/stiep/gallery-3.jpg',
+    ],
+    seo: {
+      title: 'Bruxo Team — Unidade Stiep',
+      description:
+        'Treinos técnicos e evolução constante na Unidade Stiep. Iniciantes e avançados. Matrículas abertas.',
+    },
   },
   {
-    id: "itapua",
-    name: "Unidade Itapuã",
-    address: "Alto do Macaco — Itapuã, Salvador/BA (Projeto Social)",
-    mapEmbed:
-      "https://www.google.com/maps?q=Alto+do+Macaco,+Itapuã,+Salvador+BA&output=embed",
-    whatsapp: "5571999999999",
-    image: "/itapua.jpg",
-    schedule: [
-      { day: "Ter", group: "NOGI", time: "19:30–20:30" },
+    slug: 'itapua',
+    name: 'Unidade Itapuã',
+    shortName: 'Itapuã',
+    whatsapp: '557199999999',
+    address: 'Alto do Macaco — Itapuã, Salvador/BA (Projeto Social)',
+    mapQuery: 'Alto do Macaco, Itapuã, Salvador - BA',
+    heroImage: '/units/itapua/hero.jpg',
+    description:
+      'Projeto social da Bruxo Team com foco em inclusão, disciplina e formação cidadã através do Jiu-Jitsu.',
+    instructors: [
+      {
+        name: 'Equipe Bruxo Team',
+        role: 'Instrutores',
+        photo: '/instructors/tiago.jpg',
+      },
     ],
+    schedule: [
+      { day: 'ter', label: 'Mista', time: '06:00' },
+      { day: 'qua', label: 'Kids', time: '10:00' },
+      // ...
+    ],
+    gallery: [
+      '/units/itapua/gallery-1.jpg',
+      '/units/itapua/gallery-2.jpg',
+    ],
+    seo: {
+      title: 'Bruxo Team — Unidade Itapuã (Projeto Social)',
+      description:
+        'Projeto social em Itapuã: inclusão e disciplina no tatame. Conheça horários e faça sua inscrição.',
+    },
   },
   {
-    id: "stella",
-    name: "Unidade Stella",
+    slug: 'stella',
+    name: 'Unidade Stella',
+    shortName: 'Stella',
+    whatsapp: '5571991843706', // pelo card que você mandou
     address:
-      "Alameda Dilson Jatahy Fonseca, 858 — Stella Maris, Salvador/BA",
-    mapEmbed:
-      "https://www.google.com/maps?q=Alameda+Dilson+Jatahy+Fonseca,+858,+Stella+Maris,+Salvador+BA&output=embed",
-    whatsapp: "5571999999999",
-    image: "/stella.jpg",
-    schedule: [
-      { day: "Sáb", group: "Infantil", time: "10:00–11:00" },
+      'Alameda Dilson Jatahy Fonseca, 858 — Stella Maris, Salvador/BA',
+    mapQuery:
+      'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris, Salvador - BA',
+    heroImage: '/units/stella/hero.jpg',
+    description:
+      'Unidade moderna com treinos para todas as idades. Turmas Kids com metodologia lúdica e segura.',
+    instructors: [
+      {
+        name: 'Professor Kids — Stella',
+        role: 'Instrutor Kids',
+        bio:
+          'Responsável pelas turmas infantis. Foco em disciplina, respeito e confiança, com didática própria.',
+        photo: '/instructors/prof-kids-stella.jpg',
+      },
+      {
+        name: 'Tiago “Bruxo”',
+        role: 'Head Coach',
+        photo: '/instructors/tiago.jpg',
+      },
     ],
+    schedule: [
+      { day: 'seg', label: 'Mista', time: '06:00' },
+      { day: 'seg', label: 'Kids', time: '10:00' },
+      { day: 'qua', label: 'Kids', time: '10:00' },
+      { day: 'sex', label: 'Kids', time: '10:00' },
+      { day: 'sab', label: 'Open Mat', time: '10:00' },
+      { day: 'seg', label: 'Mista', time: '20:15' },
+    ],
+    gallery: [
+      '/units/stella/gallery-1.jpg',
+      '/units/stella/gallery-2.jpg',
+      '/units/stella/gallery-3.jpg',
+    ],
+    seo: {
+      title: 'Bruxo Team — Unidade Stella Maris',
+      description:
+        'Treinos para todas as idades em Stella Maris. Kids, Mista e Open Mat. Veja horários e fale no WhatsApp.',
+    },
   },
 ];
+
+export const UNITS_INDEX = UNITS.reduce<Record<string, UnitDetail>>(
+  (acc, u) => ((acc[u.slug] = u), acc),
+  {}
+);
