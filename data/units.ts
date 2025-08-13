@@ -111,7 +111,7 @@ export const UNITS: UnitDetail[] = [
       'Alameda Dilson Jatahy Fonseca, 858 — Stella Maris, Salvador/BA',
     mapQuery:
       'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris, Salvador - BA',
-    heroImage: '/units/stella/hero.jpg',
+    heroImage: '/stella.jpg',
     description:
       'Unidade moderna com treinos para todas as idades. Turmas Kids com metodologia lúdica e segura.',
     instructors: [
