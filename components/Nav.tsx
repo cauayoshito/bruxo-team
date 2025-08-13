@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu } from "lucide-react";
 
@@ -14,27 +13,26 @@ const items = [
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
 
-  // se estou na home, uso "#id"; senão, uso "/#id"
-  const homeHash = (id: string) => (pathname === "/" ? `#${id}` : `/#${id}`);
+  // Usamos sempre UrlObject para satisfazer o typedRoutes
+  const toHomeHash = (id: string) => ({ pathname: "/", hash: id } as const);
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur bg-background/80 border-b border-white/5">
       <div className="container mx-auto h-16 px-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3" prefetch={false}>
+        <Link href={{ pathname: "/" }} className="flex items-center gap-3" prefetch={false}>
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white">
             <Image src="/logo-bruxo.png" alt="Bruxo Team" width={26} height={26} priority />
           </span>
           <span className="font-extrabold tracking-wide">BRUXO TEAM</span>
         </Link>
 
-        {/* desktop */}
+        {/* menu desktop */}
         <nav className="hidden md:flex items-center gap-6">
           {items.map((it) => (
             <Link
               key={it.id}
-              href={homeHash(it.id)}
+              href={toHomeHash(it.id)}
               prefetch={false}
               className="text-sm text-white/80 hover:text-white"
             >
@@ -60,7 +58,7 @@ export default function Nav() {
             {items.map((it) => (
               <Link
                 key={it.id}
-                href={homeHash(it.id)}
+                href={toHomeHash(it.id)}
                 prefetch={false}
                 className="text-sm"
                 onClick={() => setOpen(false)}
