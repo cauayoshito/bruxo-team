@@ -37,15 +37,15 @@ export const UNITS: UnitDetail[] = [
     slug: 'stiep',
     name: 'Unidade Stiep',
     shortName: 'Stiep',
-    whatsapp: '557199999999', // ajuste
+    whatsapp: '5571992813525', // ajuste
     address: 'Rua Arthur Fraga — Stiep, Salvador/BA',
     mapQuery: 'Rua Arthur Fraga, Stiep, Salvador - BA',
-    heroImage: '/units/stiep/hero.jpg',
+    heroImage: '/stiep.jpeg',
     description:
       'A unidade Stiep reúne treinos de base técnica forte e ritmo constante, ideal para iniciantes e avançados que buscam evolução consistente.',
     instructors: [
       {
-        name: 'Tiago “Bruxo”',
+        name: 'Ybere Camargo”',
         role: 'Head Coach',
         bio:
           'Professor desde 2019 à frente da equipe. Linha técnica, disciplina e formação humana.',
@@ -77,13 +77,13 @@ export const UNITS: UnitDetail[] = [
     whatsapp: '557199999999',
     address: 'Alto do Macaco — Itapuã, Salvador/BA (Projeto Social)',
     mapQuery: 'Alto do Macaco, Itapuã, Salvador - BA',
-    heroImage: '/units/itapua/hero.jpg',
+    heroImage: '/itapua.jpeg',
     description:
       'Projeto social da Bruxo Team com foco em inclusão, disciplina e formação cidadã através do Jiu-Jitsu.',
     instructors: [
       {
-        name: 'Equipe Bruxo Team',
-        role: 'Instrutores',
+        name: 'Lucas Ratto',
+        role: 'Head Coach',
         photo: '/instructors/tiago.jpg',
       },
     ],
