@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { waLink } from '@/lib/whatsapp';
+
+const WHATSAPP_GERAL = '5571999990000'; // <- troque pelo número real
 
 export default function Hero(){
   return (
@@ -14,7 +17,9 @@ export default function Hero(){
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <a href="#unidades" className="btn-primary">Escolher unidade</a>
-          <Link className="btn-outline" href="#contato">Falar no WhatsApp</Link>
+          <a className="btn-outline" href={waLink(WHATSAPP_GERAL, 'Olá! Quero saber mais sobre os treinos da Bruxo Team.')}>
+            Falar no WhatsApp
+          </a>
         </div>
       </div>
     </section>
