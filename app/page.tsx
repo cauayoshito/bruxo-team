@@ -5,7 +5,7 @@ import Projects from "@/components/Projects";
 import Turmas from "@/components/Turmas";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import { units } from "@/data/units";
+import Unit from "@/data/units";
 
 export default function Page(){
   return (
