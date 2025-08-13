@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 export default function Schedule({units}:{units:Unit[]}){
   const [active, setActive] = useState(units[0].slug);
-  const current = units.find(u=>u.slug===active)!;
+const current = units.find(u => u.slug === active)!;
   return (
     <section id="horarios" className="container py-16">
       <h2 className="h2">Horários de Treino</h2>
