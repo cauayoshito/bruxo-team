@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import UnitCard from "@/components/UnitCard";
 import Schedule from "@/components/Schedule";
 import Projects from "@/components/Projects";
+import Turmas from "@/components/Turmas";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { units } from "@/data/units";
@@ -18,6 +19,7 @@ export default function Page(){
         </div>
       </section>
       <Schedule units={units} />
+      <Turmas />
       <Projects />
       <Testimonials />
       <Footer />
