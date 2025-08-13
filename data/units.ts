@@ -49,7 +49,7 @@ export const UNITS: UnitDetail[] = [
         role: 'Head Coach',
         bio:
           'Professor desde 2019 à frente da equipe. Linha técnica, disciplina e formação humana.',
-        photo: '/ybere.jepg',
+        photo: '/ybere.jpeg',
       },
     ],
     schedule: [
@@ -117,11 +117,11 @@ export const UNITS: UnitDetail[] = [
       'Unidade moderna com treinos para todas as idades. Turmas Kids com metodologia lúdica e segura.',
     instructors: [
       {
-        name: 'Professor Kids — Stella',
+        name: 'Jean Ribeiro',
         role: 'Instrutor Kids',
         bio:
           'Responsável pelas turmas infantis. Foco em disciplina, respeito e confiança, com didática própria.',
-        photo: '/instructors/prof-kids-stella.jpg',
+        photo: '/jotape.jpeg',
       },
       {
         name: 'Tiago “Bruxo”',
