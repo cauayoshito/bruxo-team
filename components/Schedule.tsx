@@ -1,14 +1,23 @@
 "use client";
-import { Unit } from "@/data/units";
+import { UnitDetail } from "@/data/units";
 import { useState } from "react";
 import clsx from "clsx";
 
-export default function Schedule({ units }: { units: Unit[] }) {
-  // usa 'id' (stiep | itapua | stella)
-  const [active, setActive] = useState(units[0].id);
-  const current = units.find((u) => u.id === active)!;
+const DAY_LABEL: Record<string, string> = {
+  seg: "Seg",
+  ter: "Ter",
+  qua: "Qua",
+  qui: "Qui",
+  sex: "Sex",
+  sab: "Sáb",
+};
 
-  // se ainda não preencheu os horários no data, não quebra build
+export default function Schedule({ units }: { units: UnitDetail[] }) {
+  // usa 'slug' (stiep | itapua | stella)
+  const [active, setActive] = useState<UnitDetail["slug"]>(units[0].slug);
+  const current = units.find((u) => u.slug === active)!;
+
+  // tolerante: se ainda não tiver horários preenchidos, não quebra
   const rows = current.schedule ?? [];
 
   return (
@@ -18,11 +27,11 @@ export default function Schedule({ units }: { units: Unit[] }) {
       <div className="mt-6 flex gap-2 flex-wrap">
         {units.map((u) => (
           <button
-            key={u.id}
-            onClick={() => setActive(u.id)}
+            key={u.slug}
+            onClick={() => setActive(u.slug)}
             className={clsx(
               "btn",
-              active === u.id ? "btn-primary" : "btn-outline"
+              active === u.slug ? "btn-primary" : "btn-outline"
             )}
           >
             {u.name}
@@ -43,8 +52,8 @@ export default function Schedule({ units }: { units: Unit[] }) {
             <tbody>
               {rows.map((s, i) => (
                 <tr key={i} className="card">
-                  <td className="px-3 py-3">{s.day}</td>
-                  <td className="px-3 py-3">{s.group}</td>
+                  <td className="px-3 py-3">{DAY_LABEL[s.day] ?? s.day}</td>
+                  <td className="px-3 py-3">{s.label}</td>
                   <td className="px-3 py-3">{s.time}</td>
                 </tr>
               ))}
