@@ -1,18 +1,25 @@
 // app/unidades/[slug]/page.tsx
-import { Metadata } from "next";
-import { UNITS, UNITS_INDEX } from "@/data/units";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import {
+  UNITS,
+  UNITS_INDEX,
+  type UnitSlug,
+  type UnitDetail,
+} from "@/data/units";
+
 import UnitHeader from "@/components/UnitHeader";
 import UnitInstructors from "@/components/UnitInstructors";
 import UnitSchedule from "@/components/UnitSchedule";
 import UnitGallery from "@/components/UnitGallery";
 
-type Props = { params: { slug: string } };
+type Props = { params: { slug: UnitSlug } };
 
 // (opcional) evita gerar rotas dinâmicas fora da lista
 export const dynamicParams = false;
 
 // Gera as rotas estáticas com base nas unidades
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return UNITS.map((u) => ({ slug: u.slug }));
 }
 
@@ -22,21 +29,28 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!unit) {
     return { title: "Bruxo Team", description: "Unidade não encontrada." };
   }
+
+  const title =
+    unit.seo?.title ?? `${unit.name} — Bruxo Team`;
+  const description =
+    unit.seo?.description ?? `Página da ${unit.name}.`;
+  const images = unit.heroImage ? [unit.heroImage] : [];
+
   return {
-    title: unit.seo.title,
-    description: unit.seo.description,
+    title,
+    description,
     openGraph: {
-      title: unit.seo.title,
-      description: unit.seo.description,
-      images: [unit.heroImage],
+      title,
+      description,
+      images,
       type: "website",
     },
   };
 }
 
 export default function UnitPage({ params }: Props) {
-  const unit = UNITS_INDEX[params.slug];
-  if (!unit) return null;
+  const unit: UnitDetail | undefined = UNITS_INDEX[params.slug];
+  if (!unit) return notFound();
 
   return (
     <main>
@@ -52,19 +66,23 @@ export default function UnitPage({ params }: Props) {
       {/* Galeria da unidade */}
       <UnitGallery unit={unit} />
 
-      {/* Endereço e mapa */}
-      <section className="container py-12">
-        <h2 className="h2">Endereço</h2>
-        <p className="p mt-2">{unit.address}</p>
-        <div className="mt-4">
-          <iframe
-            className="w-full h-64 rounded-xl border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            src={`https://www.google.com/maps?q=${encodeURIComponent(unit.mapQuery)}&output=embed`}
-          />
-        </div>
-      </section>
+      {/* Endereço e mapa (renderiza só se tiver info) */}
+      {(unit.address || unit.mapQuery) && (
+        <section className="container py-12">
+          <h2 className="h2">Endereço</h2>
+          {unit.address && <p className="p mt-2">{unit.address}</p>}
+          {unit.mapQuery && (
+            <div className="mt-4">
+              <iframe
+                className="w-full h-64 rounded-xl border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(unit.mapQuery)}&output=embed`}
+              />
+            </div>
+          )}
+        </section>
+      )}
     </main>
   );
 }
