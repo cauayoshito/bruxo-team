@@ -1,4 +1,5 @@
-// data/schedule.ts
+import type { UnitSlug } from "@/data/units";
+
 export type Session = { title: string; time: string; note?: string };
 export type DayKey = "seg" | "ter" | "qua" | "qui" | "sex" | "sab";
 export type GymSchedule = Record<DayKey, Session[]>;
@@ -74,7 +75,8 @@ export const scheduleItapua: GymSchedule = {
 };
 
 // ---------- MAPA POR UNIDADE ----------
-export const SCHEDULES_BY_UNIT: Record<"stella" | "stiep" | "itapua", GymSchedule> = {
+export const SCHEDULES_BY_UNIT: Record<UnitSlug, GymSchedule> = {
+  matriz: scheduleStella, // Matriz usa a grade de Stella
   stella: scheduleStella,
   stiep: scheduleStiep,
   itapua: scheduleItapua,
