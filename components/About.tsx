@@ -9,7 +9,7 @@ const SLIDES = [
   { src: "/s1.jpeg", alt: "Treino na Bruxo Team" },
   { src: "/s2.jpeg", alt: "Equipe reunida" },
   { src: "/s3.jpeg", alt: "Aula em andamento" },
-   { src: "/s4.jpeg", alt: "Treino na Bruxo Team" },
+  { src: "/s4.jpeg", alt: "Treino na Bruxo Team" },
   { src: "/s5.jpeg", alt: "Equipe reunida" },
 ];
 
@@ -18,7 +18,9 @@ const AUTOPLAY_MS = 5000;
 export default function About() {
   const [i, setI] = useState(0);
   const count = SLIDES.length;
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // ✅ timer no browser (evita NodeJS.Timeout) + nunca retorna null no cleanup
+  const timerRef = useRef<number | null>(null);
   const hoverRef = useRef(false);
 
   const next = () => setI((v) => (v + 1) % count);
@@ -27,11 +29,26 @@ export default function About() {
   // autoplay (pausa em hover/aba oculta)
   useEffect(() => {
     const tick = () => {
-      if (!hoverRef.current && document.visibilityState === "visible") next();
+      if (!hoverRef.current && document.visibilityState === "visible") {
+        next();
+      }
     };
-    timer.current && clearInterval(timer.current);
-    timer.current = setInterval(tick, AUTOPLAY_MS);
-    return () => timer.current && clearInterval(timer.current);
+
+    // limpa anterior, se existir
+    if (timerRef.current !== null) {
+      window.clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    // cria novo intervalo
+    timerRef.current = window.setInterval(tick, AUTOPLAY_MS);
+
+    // cleanup SEMPRE retorna void
+    return () => {
+      if (timerRef.current !== null) {
+        window.clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [i, count]);
 
   // ids p/ acessibilidade
@@ -39,7 +56,9 @@ export default function About() {
 
   // swipe touch
   const startX = useRef<number | null>(null);
-  const onTouchStart = (e: React.TouchEvent) => (startX.current = e.touches[0].clientX);
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+  };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (startX.current == null) return;
     const dx = e.changedTouches[0].clientX - startX.current;
