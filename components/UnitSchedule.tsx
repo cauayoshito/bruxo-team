@@ -1,7 +1,6 @@
 // components/UnitSchedule.tsx
+import { SCHEDULES_BY_UNIT, type DayKey, type GymSchedule } from "@/data/schedule";
 import type { UnitDetail } from "@/data/units";
-import type { GymSchedule, DayKey } from "@/data/schedule";
-import { SCHEDULES_BY_UNIT } from "@/data/schedule";
 import { normalizeLabel, normalizeTime } from "@/lib/schedule";
 
 const DAY_LABEL: Record<DayKey, string> = {
@@ -13,49 +12,43 @@ const DAY_LABEL: Record<DayKey, string> = {
   sab: "Sáb",
 };
 
-function toRows(schedule: GymSchedule) {
-  return (Object.keys(schedule) as DayKey[]).flatMap((day) =>
-    schedule[day].map((s) => ({
-      day,
-      label: normalizeLabel(s.title), // ← padroniza rótulos
-      time: normalizeTime(s.time),    // ← padroniza horários
-    }))
-  );
+const ORDERED_DAYS: DayKey[] = ["seg", "ter", "qua", "qui", "sex", "sab"];
+
+function hasAnySession(schedule: GymSchedule): boolean {
+  return Object.values(schedule).some((arr) => arr && arr.length > 0);
 }
 
 export default function UnitSchedule({ unit }: { unit: UnitDetail }) {
-  const schedule = SCHEDULES_BY_UNIT[unit.slug] ?? null;
-  if (!schedule) return null;
+  // Agora o tipo bate com UnitSlug (matriz | stiep | itapua), então compila certinho
+  const schedule = SCHEDULES_BY_UNIT[unit.slug];
 
-  const rows = toRows(schedule);
+  // Se não houver grade ou estiver vazia, não renderiza a seção
+  if (!schedule || !hasAnySession(schedule)) return null;
 
   return (
-    <section id="horarios" className="container py-12">
+    <section className="container py-12">
       <h2 className="h2">Horários</h2>
 
-      {/* legenda opcional para educar usuário e time */}
-      <p className="p mt-2 text-white/70">
-        <b>No-Gi (sem kimono)</b> = treino sem kimono •{" "}
-        <b>Jiu-Jitsu (com kimono)</b> = treino tradicional
-      </p>
-
-      <div className="mt-6 overflow-x-auto rounded-xl border border-border">
-        <table className="w-full text-sm table-auto">
-          <thead className="text-white/80">
-            <tr className="text-left [&>th]:py-3 [&>th]:pr-4">
+      <div className="mt-6 overflow-x-auto">
+        <table className="min-w-[640px] text-sm">
+          <thead>
+            <tr className="[&>th]:text-left [&>th]:pr-6 [&>th]:py-2">
               <th>Dia</th>
               <th>Turma</th>
-              <th className="pr-0">Horário</th>
+              <th>Horário</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/10">
-            {rows.map((r, i) => (
-              <tr key={i} className="[&>td]:py-3 [&>td]:pr-4">
-                <td className="font-medium">{DAY_LABEL[r.day as DayKey]}</td>
-                <td>{r.label}</td>
-                <td className="pr-0">{r.time}</td>
-              </tr>
-            ))}
+          <tbody className="[&>tr>td]:py-2 [&>tr>td]:pr-6">
+            {ORDERED_DAYS.flatMap((day) => {
+              const rows = schedule[day] ?? [];
+              return rows.map((s, idx) => (
+                <tr key={`${day}-${idx}`}>
+                  <td>{DAY_LABEL[day]}</td>
+                  <td>{normalizeLabel(s.title)}</td>
+                  <td>{normalizeTime(s.time)}</td>
+                </tr>
+              ));
+            })}
           </tbody>
         </table>
       </div>
