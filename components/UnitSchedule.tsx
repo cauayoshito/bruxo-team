@@ -1,7 +1,12 @@
 // components/UnitSchedule.tsx
-import { SCHEDULES_BY_UNIT, type DayKey, type GymSchedule } from "@/data/schedule";
+import {
+  SCHEDULES_BY_UNIT,
+  type DayKey,
+  type GymSchedule,
+} from "@/data/schedule";
 import type { UnitDetail } from "@/data/units";
-import { normalizeLabel, normalizeTime } from "@/lib/schedule";
+
+// ❌ REMOVIDO: import { normalizeLabel, normalizeTime } from "@/lib/schedule";
 
 const DAY_LABEL: Record<DayKey, string> = {
   seg: "Seg",
@@ -19,10 +24,8 @@ function hasAnySession(schedule: GymSchedule): boolean {
 }
 
 export default function UnitSchedule({ unit }: { unit: UnitDetail }) {
-  // Agora o tipo bate com UnitSlug (matriz | stiep | itapua), então compila certinho
   const schedule = SCHEDULES_BY_UNIT[unit.slug];
 
-  // Se não houver grade ou estiver vazia, não renderiza a seção
   if (!schedule || !hasAnySession(schedule)) return null;
 
   return (
@@ -44,8 +47,10 @@ export default function UnitSchedule({ unit }: { unit: UnitDetail }) {
               return rows.map((s, idx) => (
                 <tr key={`${day}-${idx}`}>
                   <td>{DAY_LABEL[day]}</td>
-                  <td>{normalizeLabel(s.title)}</td>
-                  <td>{normalizeTime(s.time)}</td>
+                  {/* ✅ usa exatamente o título do arquivo */}
+                  <td>{s.title}</td>
+                  {/* ✅ usa exatamente o horário do arquivo */}
+                  <td className="tabular-nums">{s.time}</td>
                 </tr>
               ));
             })}
