@@ -162,7 +162,7 @@ export const UNITS: UnitDetail[] = [
       {
         name: 'Flavio Barros',
         role: 'Mestre',
-        image: '/flavio.jpeg',
+        image: '/fl.jpeg',
         imagePos: 'center top', // 👉 foca no topo para não cortar a cabeça
       },
       {
