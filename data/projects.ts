@@ -1,48 +1,49 @@
 // data/projects.ts
-import type { DayKey } from "@/data/schedule";
-
 export type Project = {
   slug: string;
   name: string;
-  unitSlug?: string; // slug da unidade para puxar grade
-  location?: string;
-  description?: string;
-  schedule: Partial<Record<DayKey, Array<{ title: string; time: string }>>>;
-  gallery?: Array<{ src: string; alt?: string; width?: number; height?: number }>;
+  location: string;      // bairro/cidade
+  description: string;   // resumo curto
+  heroImage?: string;    // /public/...
+  address?: string;
+  mapQuery?: string;
+  whatsapp?: string;     // 55DDDxxxxxxx
 };
 
-// Lista de projetos
 export const PROJECTS: Project[] = [
   {
-    slug: "rato-de-tatame-alto-do-macaco",
-    name: "Rato de Tatame – Alto do Macaco",
-    unitSlug: "itapua",
-    location: "Itapuã, Salvador - BA",
+    slug: "Projeto Social Bruxo Team",
+    name: "Projeto Social",
+    location: "Itapuã, Salvador – BA",
     description:
       "Projeto social da Bruxo Team voltado para a comunidade do Alto do Macaco, oferecendo aulas gratuitas de Jiu-Jitsu para crianças e adolescentes.",
-    schedule: {
-      seg: [{ title: "Infantil", time: "18:00" }, { title: "Juvenil/Adulto", time: "19:00" }],
-      qua: [{ title: "Infantil", time: "18:00" }, { title: "Juvenil/Adulto", time: "19:00" }],
-      sex: [{ title: "Infantil", time: "18:00" }, { title: "Juvenil/Adulto", time: "19:00" }],
-    },
-    gallery: [
-      { src: "/images/projetos/rato-1.jpg", alt: "Aula infantil no projeto Rato de Tatame" },
-      { src: "/images/projetos/rato-2.jpg", alt: "Treino de jovens atletas" },
-    ],
+    heroImage: "/itapua.jepg",
+    mapQuery: "2a Travessa 17 de Setembro 12, Itapuã, Salvador - BA",
+    whatsapp: "5571991505420", // preencha se quiser
   },
   {
-    slug: "projeto-exemplo-2",
-    name: "Projeto Exemplo 2",
-    location: "Bairro Exemplo, Salvador - BA",
-    description: "Outro projeto social exemplo para teste.",
-    schedule: {
-      ter: [{ title: "Turma Única", time: "18:30" }],
-      qui: [{ title: "Turma Única", time: "18:30" }],
-    },
+    slug: "Projeto Social Bruxo Team",
+    name: "Projeto Social",
+    location: "Salvador – BA",
+    description:
+      "Treinos focados em autoconfiança, condicionamento e defesa pessoal em ambiente seguro e acolhedor.",
+    heroImage: "/p2.jpeg",
+     mapQuery: "Centro Esportivo Armindo Biriba, rua da ilha, Itapuã, Salvador - BA",
+    whatsapp: "5571991843706", // preencha se quiser
+  },
+  {
+    slug: "Projeto Social Bruxo Team",
+    name: "Projeto Social",
+    location: "Salvador – BA",
+    description:
+      "Eventos beneficentes e mutirões para arrecadar alimentos, roupas e brinquedos para famílias em vulnerabilidade.",
+    heroImage: "/p.jpeg",
+    mapQuery: "Academia impacto, rua reinado calixto, Itapuã, Salvador - BA",
+    whatsapp: "5571991843706", // preencha se quiser
   },
 ];
 
-// Index para acesso rápido por slug
-export const PROJECTS_INDEX: Record<string, Project> = Object.fromEntries(
-  PROJECTS.map((p) => [p.slug, p])
+export const PROJECTS_INDEX: Record<string, Project> = PROJECTS.reduce(
+  (acc, p) => ((acc[p.slug] = p), acc),
+  {} as Record<string, Project>
 );
