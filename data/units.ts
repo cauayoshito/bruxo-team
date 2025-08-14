@@ -24,8 +24,8 @@ export type ClassLabel =
 // --------------------------------------
 export type ScheduleRow = {
   day: DayKey;
-  label: ClassLabel;   // nomes padronizados
-  time: string;        // "06:00" ou "19:00–20:30"
+  label: ClassLabel;
+  time: string;
 };
 
 // --------------------------------------
@@ -50,14 +50,22 @@ export type UnitDetail = {
     title: string;
     description: string;
   };
-  heroImage?: string; // URL absoluta ou caminho público (/images/...)
-  mapQuery?: string;  // texto pra query do Maps (ex.: "Rua X, 123 - Salvador")
+  heroImage?: string;
+  mapQuery?: string;
 
-  /** Matriz/destaque na home (aparece primeiro) */
+  /** Galeria de fotos da unidade (opcional) */
+  gallery?: Array<{
+    src: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  }>;
+
+  /** Matriz/destaque na home */
   featured?: boolean;
 };
 
-// Lista de unidades (ajuste os dados reais quando tiver)
+// Lista de unidades
 export const UNITS: UnitDetail[] = [
   {
     slug: 'matriz',
@@ -70,6 +78,10 @@ export const UNITS: UnitDetail[] = [
     heroImage: '/images/unidades/matriz-hero.jpg',
     mapQuery: 'Unidade Matriz Bruxo Team, Salvador - BA',
     address: 'Endereço da Matriz (ajuste aqui)',
+    gallery: [
+      { src: '/images/unidades/matriz-1.jpg', alt: 'Treino na Matriz' },
+      { src: '/images/unidades/matriz-2.jpg', alt: 'Sala principal' },
+    ],
   },
   {
     slug: 'stiep',
@@ -95,7 +107,7 @@ export const UNITS: UnitDetail[] = [
   },
 ];
 
-// Índice rápido por slug para acesso O(1)
+// Índice rápido por slug
 export const UNITS_INDEX: Record<UnitSlug, UnitDetail> = UNITS.reduce(
   (acc, u) => {
     acc[u.slug] = u;
