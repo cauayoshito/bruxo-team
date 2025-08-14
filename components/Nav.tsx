@@ -20,6 +20,7 @@ const itemsPages: PageItem[] = [
   { href: "/competicao" as Route,       label: "Competição" },
   { href: "/loja" as Route,             label: "Loja" },
   { href: "/projetos-sociais" as Route, label: "Projetos Sociais" },
+  { href: "/faq" as Route,              label: "FAQ" }, // 👈 novo
 ];
 
 const toHomeHash = (id: HomeItem["id"]) =>
