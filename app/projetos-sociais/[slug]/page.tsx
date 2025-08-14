@@ -1,82 +1,87 @@
 // app/projetos-sociais/[slug]/page.tsx
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { PROJECTS, PROJECTS_INDEX } from "@/data/projects";
-import { normalizeLabel, normalizeTime } from "@/lib/schedule";
-import type { DayKey } from "@/data/schedule";
+import { PROJECTS_INDEX } from "@/data/projects";
 
 type Props = { params: { slug: string } };
 
-// Gera as páginas para cada projeto na build
-export function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+export function generateMetadata({ params }: Props) {
+  const p = PROJECTS_INDEX[params.slug];
+  if (!p) return { title: "Projeto não encontrado — Bruxo Team" };
+  return {
+    title: `${p.name} — Projetos Sociais | Bruxo Team`,
+    description: p.description,
+  };
 }
 
-const DAY_LABEL: Record<DayKey, string> = {
-  seg: "Seg",
-  ter: "Ter",
-  qua: "Qua",
-  qui: "Qui",
-  sex: "Sex",
-  sab: "Sáb",
-};
-
-export default function ProjectPage({ params }: Props) {
+export default function ProjectDetailPage({ params }: Props) {
   const project = PROJECTS_INDEX[params.slug];
   if (!project) return notFound();
 
-  const days: DayKey[] = ["seg", "ter", "qua", "qui", "sex", "sab"];
+  const wa = project.whatsapp ? `https://wa.me/${project.whatsapp}` : null;
 
   return (
-    <main className="container py-12">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-semibold">{project.name}</h1>
-          {project.location && (
-            <p className="text-muted-foreground mt-1">{project.location}</p>
-          )}
-        </div>
-        <Link href="/projetos-sociais" className="text-sm underline">
-          ← Voltar
-        </Link>
-      </div>
+    <main>
+      <section className="container py-16 section">
+        <div className="grid md:grid-cols-12 gap-8 items-start">
+          {/* Texto */}
+          <div className="md:col-span-7">
+            <h1 className="h1">{project.name}</h1>
+            {project.location && (
+              <p className="p mt-2 opacity-80">{project.location}</p>
+            )}
+            <p className="p mt-4">{project.description}</p>
 
-      {project.description && <p className="mt-6 max-w-2xl">{project.description}</p>}
-
-      <section className="mt-8">
-        <h2 className="text-xl font-semibold mb-3">Grade de treinos</h2>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-[600px] text-sm">
-            <thead>
-              <tr className="[&>th]:text-left [&>th]:pr-6 [&>th]:py-2">
-                <th>Dia</th>
-                <th>Turma</th>
-                <th>Horário</th>
-              </tr>
-            </thead>
-            <tbody className="[&>tr>td]:py-2 [&>tr>td]:pr-6">
-              {days.flatMap((d) =>
-                (project.schedule[d] ?? []).map((s, idx) => (
-                  <tr key={`${d}-${idx}`}>
-                    <td>{DAY_LABEL[d]}</td>
-                    <td>{normalizeLabel(s.title)}</td>
-                    <td>{normalizeTime(s.time)}</td>
-                  </tr>
-                ))
+            <div className="mt-6 flex gap-3">
+              {wa && (
+                <a
+                  href={wa}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                >
+                  Falar no WhatsApp
+                </a>
               )}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              <a href="/projetos-sociais" className="btn-secondary">
+                Voltar
+              </a>
+            </div>
+          </div>
 
-      <section className="mt-10">
-        <a
-          href="https://wa.me/5571XXXXXXXXX?text=Quero%20saber%20mais%20sobre%20os%20projetos%20sociais%20da%20Bruxo%20Team"
-          className="inline-flex items-center px-4 py-2 rounded-xl border"
-        >
-          Falar no WhatsApp
-        </a>
+          {/* Mídia / Mapa */}
+          <div className="md:col-span-5">
+            <div className="card overflow-hidden">
+              {project.heroImage ? (
+                <div className="relative w-full aspect-[4/3]">
+                  <Image
+                    src={project.heroImage}
+                    alt={project.name}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 40vw, 100vw"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div className="w-full aspect-[4/3] bg-white/5" />
+              )}
+            </div>
+
+            {project.mapQuery && (
+              <div className="card mt-4 overflow-hidden">
+                <iframe
+                  className="w-full h-[280px]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                    project.mapQuery
+                  )}&output=embed`}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </section>
     </main>
   );
