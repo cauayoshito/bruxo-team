@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 // 👉 coloque as imagens em /public e ajuste os nomes aqui:
 const SLIDES = [
-  { src: "/s1.jpeg", alt: "Treino na Bruxo Team" },
+  { src: "/s.jpeg", alt: "Treino na Bruxo Team" },
   { src: "/s2.jpeg", alt: "Equipe reunida" },
   { src: "/s3.jpeg", alt: "Aula em andamento" },
   { src: "/s4.jpeg", alt: "Treino na Bruxo Team" },
