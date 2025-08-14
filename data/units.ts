@@ -183,7 +183,7 @@ export const UNITS: UnitDetail[] = [
       description: 'Conheça o Núcleo Itacaré da Bruxo Team.',
     },
     heroImage: '/y1.jpeg',
-    mapQuery: 'Ponta do Xaréu, Itacaré - BA',
+    mapQuery: 'Ponta do Xaréu, Praia da concha Itacaré - BA',
     address: 'Ponta do Xaréu - Itacaré',
     city: 'Itacaré',
     state: 'BA',
@@ -194,7 +194,7 @@ export const UNITS: UnitDetail[] = [
       { src: '/y3.jpeg', alt: 'Bruxo Team — Itacaré (aula em andamento)' },
     ],
     instructors: [
-      { name: 'Bruno Andrade', role: 'Professor', image: '/y.jpeg', imagePos: 'center top' },
+      { name: 'Bruno Andrade', role: 'Mestre', image: '/y.jpeg', imagePos: 'center top' },
     ],
   },
 ];
