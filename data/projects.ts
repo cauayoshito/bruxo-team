@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
     location: "Itapuã, Salvador – BA",
     description:
       "Projeto social da Bruxo Team voltado para a comunidade do Alto do Macaco, oferecendo aulas gratuitas de Jiu-Jitsu para crianças e adolescentes.",
-    heroImage: "/itapua.jepg",
+    heroImage: "/itapua.jpeg",
     mapQuery: "2a Travessa 17 de Setembro 12, Itapuã, Salvador - BA",
     whatsapp: "5571991505420", // preencha se quiser
   },
