@@ -1,82 +1,74 @@
+// data/schedule.ts
 import type { UnitSlug } from "@/data/units";
+import type { GymSchedule } from "@/lib/schedule";
 
-export type Session = { title: string; time: string; note?: string };
-export type DayKey = "seg" | "ter" | "qua" | "qui" | "sex" | "sab";
-export type GymSchedule = Record<DayKey, Session[]>;
+// Exemplo de grade — ajuste livremente
+const BASE_EMPTY: GymSchedule = {
+  seg: [], ter: [], qua: [], qui: [], sex: [], sab: [],
+};
 
-// ---------- BRUXO TEAM — STELLA ----------
-export const scheduleStella: GymSchedule = {
+// ---------- MATRIZ ----------
+const SCHEDULE_MATRIZ: GymSchedule = {
   seg: [
-    { title: "MISTA", time: "06:00" },
-    { title: "KIDS", time: "10:00" },
-    { title: "MISTA", time: "12:00" },
-    { title: "INICIANTES", time: "15:00" },
-    { title: "KIDS", time: "16:00" },
-    { title: "MISTA", time: "20:15" },
+    { title: "Jiu-Jitsu (com kimono)", time: "06:30–07:30" },
+    { title: "No-Gi (sem kimono)",     time: "12:00–13:00" },
+    { title: "Mista",                  time: "19:00–20:00" },
   ],
   ter: [
-    { title: "MISTA", time: "06:00" },
-    { title: "NO-GI", time: "12:00" },
-    { title: "INICIANTES", time: "15:00" },
-    { title: "KIDS", time: "16:00" },
+    { title: "Kids",                   time: "18:00–18:50" },
+    { title: "Jiu-Jitsu (com kimono)", time: "19:00–20:00" },
+    { title: "Competição",             time: "20:00–21:00" },
   ],
   qua: [
-    { title: "KIDS", time: "10:00" },
-    { title: "MISTA", time: "12:00" },
-    { title: "MISTA", time: "20:15" },
+    { title: "60+",                    time: "08:00–08:50" },
+    { title: "No-Gi (sem kimono)",     time: "12:00–13:00" },
+    { title: "Mista",                  time: "19:00–20:00" },
   ],
   qui: [
-    { title: "MISTA", time: "06:00" },
-    { title: "NO-GI", time: "12:00" },
-    { title: "INICIANTES", time: "15:00" },
-    { title: "KIDS", time: "16:00" },
+    { title: "Kids",                   time: "18:00–18:50" },
+    { title: "Feminino",               time: "19:00–19:50" },
+    { title: "Jiu-Jitsu (com kimono)", time: "20:00–21:00" },
   ],
   sex: [
-    { title: "KIDS", time: "10:00" },
-    { title: "MISTA", time: "12:00" },
-    { title: "KIDS", time: "16:00" },
-    { title: "MISTA", time: "20:15" },
+    { title: "Jiu-Jitsu (com kimono)", time: "06:30–07:30" },
+    { title: "Mista",                  time: "19:00–20:00" },
   ],
-  sab: [{ title: "OPEN-MAT", time: "10:00" }],
+  sab: [
+    { title: "Open Mat",               time: "10:00–11:30" },
+  ],
 };
 
-// ---------- BRUXO TEAM — STIEP ----------
-export const scheduleStiep: GymSchedule = {
+// ---------- STIEP ----------
+const SCHEDULE_STIEP: GymSchedule = {
+  ...BASE_EMPTY,
   seg: [
-    { title: "JIU-JITSU (com kimono)", time: "07:00–09:00" },
-    { title: "JIU-JITSU (com kimono)", time: "20:00–22:00" },
-  ],
-  ter: [
-    { title: "JIU-JITSU Infantil", time: "18:00–19:00" },
-    { title: "JIU-JITSU Feminino", time: "19:00–20:00" },
-    { title: "NO-GI", time: "20:00–22:00" },
+    { title: "Mista",                  time: "19:00–20:00" },
   ],
   qua: [
-    { title: "JIU-JITSU (com kimono)", time: "07:00–09:00" },
-    { title: "JIU-JITSU (com kimono)", time: "20:00–22:00" },
+    { title: "Mista",                  time: "19:00–20:00" },
+  ],
+  sex: [
+    { title: "No-Gi (sem kimono)",     time: "19:00–20:00" },
+  ],
+};
+
+// ---------- ITAPUÃ ----------
+const SCHEDULE_ITAPUA: GymSchedule = {
+  ...BASE_EMPTY,
+  ter: [
+    { title: "Mista",                  time: "19:00–20:00" },
   ],
   qui: [
-    { title: "JIU-JITSU Infantil", time: "18:00–19:00" },
-    { title: "JIU-JITSU Feminino", time: "19:00–20:00" },
-    { title: "NO-GI", time: "20:00–22:00" },
+    { title: "Mista",                  time: "19:00–20:00" },
   ],
-  sex: [],
-  sab: [],
+  sab: [
+    { title: "Open Mat",               time: "09:00–10:30" },
+  ],
 };
 
-// ---------- BRUXO TEAM — ITAPUÃ ----------
-export const scheduleItapua: GymSchedule = {
-  seg: [],
-  ter: [{ title: "Mista", time: "20:00–21:20" }],
-  qua: [],
-  qui: [{ title: "Mista", time: "20:00–21:20" }],
-  sex: [],
-  sab: [],
-};
-
-// ---------- MAPA POR UNIDADE ----------
+// Mapa final por unidade
 export const SCHEDULES_BY_UNIT: Record<UnitSlug, GymSchedule> = {
-  matriz: scheduleStella, // Matriz usa a grade de Stella
-  stiep: scheduleStiep,
-  itapua: scheduleItapua,
+  matriz: SCHEDULE_MATRIZ,
+  stiep: SCHEDULE_STIEP,
+  itapua: SCHEDULE_ITAPUA,
 };
