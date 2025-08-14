@@ -1,13 +1,8 @@
 // data/units.ts
+// Tipos centrais e cadastro das unidades
 
-// --------------------------------------
-// Dias da semana (chaves do cronograma)
-// --------------------------------------
 export type DayKey = 'seg' | 'ter' | 'qua' | 'qui' | 'sex' | 'sab';
 
-// --------------------------------------
-// Nomes oficiais das aulas (padronizados)
-// --------------------------------------
 export type ClassLabel =
   | 'Jiu-Jitsu (com kimono)'
   | 'No-Gi (sem kimono)'
@@ -16,119 +11,50 @@ export type ClassLabel =
   | 'Feminino'
   | 'Competição'
   | '60+'
-  | 'Open Mat'
-  | 'Avançado';
+  | 'Open Mat';
 
-// --------------------------------------
-// Linha de horário (já padronizada)
-// time: "HH:MM" ou "HH:MM–HH:MM"
-// --------------------------------------
 export type ScheduleRow = {
   day: DayKey;
   label: ClassLabel;
+  /** "HH:MM" ou "HH:MM–HH:MM" (aceita -, – ou —) */
   time: string;
 };
 
-// --------------------------------------
-// Tipos de Unidade / Instrutor
-// --------------------------------------
 export type UnitSlug = 'matriz' | 'stiep' | 'itapua';
-
-export type Instructor = {
-  name: string;
-  role?: string;
-  image?: string;     // /images/...
-  bio?: string;
-  instagram?: string; // @usuario
-};
 
 export type UnitDetail = {
   slug: UnitSlug;
   name: string;
   shortName?: string;
 
-  // Endereço/contato (opcionais)
-  address?: string;
+  // Dados públicos/opcionais (preencha quando tiver)
+  street?: string;
+  district?: string;
   city?: string;
-  state?: string;
-  phone?: string;
-  whatsapp?: string;
-
-  // Texto/SEO (opcionais)
-  description?: string;
-  seo?: { title: string; description: string };
-
-  // Mídia e mapa (opcionais)
-  heroImage?: string; // URL absoluta ou caminho público (/images/...)
-  mapQuery?: string;  // texto para Google Maps (ex.: "Rua X, 123 - Salvador")
-
-  // Galeria (opcional)
-  gallery?: Array<{ src: string; alt?: string; width?: number; height?: number }>;
-
-  // Destaque
-  featured?: boolean;
-
-  // Instrutores (opcional)
-  instructors?: Instructor[];
+  uf?: string;          // ex.: "BA"
+  zip?: string;
+  whatsapp?: string;    // ex.: "+55 71 9 9999-9999"
+  instagram?: string;   // ex.: "@bruxoteam"
+  mapsUrl?: string;
 };
 
-// --------------------------------------
-// Lista de unidades (ajuste os dados reais quando tiver)
-// --------------------------------------
-export const UNITS: UnitDetail[] = [
-  {
+// Cadastro simples (preencha os campos de endereço/contato depois)
+export const UNITS: Record<UnitSlug, UnitDetail> = {
+  matriz: {
     slug: 'matriz',
-    name: 'Unidade Matriz',
+    name: 'Bruxo Team — Matriz',
     shortName: 'Matriz',
-    featured: true,
-    description: 'A unidade principal da Bruxo Team.',
-    seo: {
-      title: 'Unidade Matriz — Bruxo Team',
-      description: 'Conheça a unidade Matriz da Bruxo Team.',
-    },
-    heroImage: '/images/unidades/matriz-hero.jpg',
-    mapQuery: 'Unidade Matriz Bruxo Team, Salvador - BA',
-    address: 'Endereço da Matriz (ajuste aqui)',
-    // Exemplo de instrutores (opcional)
-    // instructors: [
-    //   { name: 'Fulano da Silva', role: 'Faixa-Preta', instagram: '@fulano.bjj' },
-    // ],
+    // street: 'Rua ...',
+    // whatsapp: '(71) 9 ....',
   },
-  {
+  stiep: {
     slug: 'stiep',
-    name: 'Unidade Stiep',
+    name: 'Bruxo Team — Stiep',
     shortName: 'Stiep',
-    description: 'Unidade Stiep da Bruxo Team.',
-    seo: {
-      title: 'Unidade Stiep — Bruxo Team',
-      description: 'Conheça a unidade Stiep da Bruxo Team.',
-    },
-    heroImage: '/images/unidades/stiep-hero.jpg',
-    mapQuery: 'Unidade Stiep Bruxo Team, Salvador - BA',
-    address: 'Endereço do Stiep (ajuste aqui)',
   },
-  {
+  itapua: {
     slug: 'itapua',
-    name: 'Unidade Itapuã',
+    name: 'Bruxo Team — Itapuã',
     shortName: 'Itapuã',
-    description: 'Unidade Itapuã da Bruxo Team.',
-    seo: {
-      title: 'Unidade Itapuã — Bruxo Team',
-      description: 'Conheça a unidade Itapuã da Bruxo Team.',
-    },
-    heroImage: '/images/unidades/itapua-hero.jpg',
-    mapQuery: 'Unidade Itapuã Bruxo Team, Salvador - BA',
-    address: 'Endereço de Itapuã (ajuste aqui)',
   },
-];
-
-// --------------------------------------
-// Índice rápido por slug (acesso O(1))
-// --------------------------------------
-export const UNITS_INDEX: Record<UnitSlug, UnitDetail> = UNITS.reduce(
-  (acc, u) => {
-    acc[u.slug] = u;
-    return acc;
-  },
-  {} as Record<UnitSlug, UnitDetail>
-);
+};
