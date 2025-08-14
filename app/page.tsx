@@ -9,6 +9,11 @@ import { UNITS } from "@/data/units";
 import { scheduleStella, scheduleStiep } from "@/data/schedule";
 
 export default function Page() {
+  // Matriz (featured: true) aparece primeiro
+  const ordered = [...UNITS].sort(
+    (a, b) => Number(!!b.featured) - Number(!!a.featured)
+  );
+
   return (
     <main>
       <Hero />
@@ -16,7 +21,7 @@ export default function Page() {
       <section id="unidades" className="container py-16 section">
         <h2 className="h2">Nossas Unidades</h2>
         <div className="mt-8 grid md:grid-cols-3 gap-6">
-          {UNITS.map((u) => (
+          {ordered.map((u) => (
             <UnitCard key={u.slug} unit={u} />
           ))}
         </div>
@@ -24,7 +29,7 @@ export default function Page() {
 
       <About />
 
-      <Schedule title="Bruxo Team — Stella" data={scheduleStella} />
+      <Schedule title="Bruxo Team — Matriz" data={scheduleStella} />
       <div className="mt-12" />
       <Schedule title="Bruxo Team — Stiep" data={scheduleStiep} />
 
