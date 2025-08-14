@@ -16,11 +16,11 @@ export type ClassLabel =
   | 'Feminino'
   | 'Competição'
   | '60+'
-  | 'Open Mat';
+  | 'Open Mat'
+  | 'Avançado';
 
 // --------------------------------------
 // Linha de horário (já padronizada)
-// time: "HH:MM" ou "HH:MM–HH:MM"
 // --------------------------------------
 export type ScheduleRow = {
   day: DayKey;
@@ -29,85 +29,153 @@ export type ScheduleRow = {
 };
 
 // --------------------------------------
-// Unidades
+// Tipos de Unidade / Instrutor
 // --------------------------------------
 export type UnitSlug = 'matriz' | 'stiep' | 'itapua';
+
+export type Instructor = {
+  name: string;
+  role?: string;
+  image?: string;     // /images/...
+  bio?: string;
+  instagram?: string; // @usuario
+};
 
 export type UnitDetail = {
   slug: UnitSlug;
   name: string;
   shortName?: string;
 
-  // Dados de endereço/contato (opcionais)
+  // Endereço/contato (opcionais)
   address?: string;
   city?: string;
   state?: string;
   phone?: string;
   whatsapp?: string;
 
-  // SEO / OpenGraph (opcionais)
-  seo?: {
-    title: string;
-    description: string;
-  };
+  // Texto/SEO (opcionais)
+  description?: string;
+  seo?: { title: string; description: string };
+
+  // Mídia e mapa (opcionais)
   heroImage?: string;
   mapQuery?: string;
 
-  /** Galeria de fotos da unidade (opcional) */
-  gallery?: Array<{
-    src: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-  }>;
+  // Galeria (opcional)
+  gallery?: Array<{ src: string; alt?: string; width?: number; height?: number }>;
 
-  /** Matriz/destaque na home */
+  // Destaque
   featured?: boolean;
+
+  // Instrutores (opcional)
+  instructors?: Instructor[];
 };
 
+// --------------------------------------
 // Lista de unidades
+// --------------------------------------
 export const UNITS: UnitDetail[] = [
   {
     slug: 'matriz',
     name: 'Unidade Matriz',
+    shortName: 'Matriz',
     featured: true,
+    description: 'A unidade principal da Bruxo Team.',
     seo: {
       title: 'Unidade Matriz — Bruxo Team',
       description: 'Conheça a unidade Matriz da Bruxo Team.',
     },
-    heroImage: '/images/unidades/matriz-hero.jpg',
-    mapQuery: 'Unidade Matriz Bruxo Team, Salvador - BA',
-    address: 'Endereço da Matriz (ajuste aqui)',
+    heroImage: '/stella.jpeg',
+    mapQuery: 'Unidade Matriz Bruxo Team, Alameda Dilson Jatahy Fonseca 858 - Stella Maris, Salvador - BA',
+    address: 'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris',
+    city: 'Salvador',
+    state: 'BA',
+    whatsapp: '5571991843706',
     gallery: [
-      { src: '/images/unidades/matriz-1.jpg', alt: 'Treino na Matriz' },
-      { src: '/images/unidades/matriz-2.jpg', alt: 'Sala principal' },
+      { src: '/stella.jpeg',     alt: 'Bruxo Team — Matriz (fachada)' },
+      { src: '/stella2.jpeg',   alt: 'Bruxo Team — Matriz (tatame 1)' },
+      { src: '/stella3.jpeg',   alt: 'Bruxo Team — Matriz (aula em andamento)' },
     ],
+    instructors: [
+      {
+        name: 'Tiago Bruxo',
+        role: 'Mestre',
+        image: '/bruxo.jpeg',
+      },
+      {
+        name: 'Jean Ribeiro',
+        role: 'Mestre Kids',
+        image: '/jotape.jpeg',
+      }
+    ]
   },
   {
     slug: 'stiep',
     name: 'Unidade Stiep',
+    shortName: 'Stiep',
+    description: 'Unidade Stiep da Bruxo Team.',
     seo: {
       title: 'Unidade Stiep — Bruxo Team',
       description: 'Conheça a unidade Stiep da Bruxo Team.',
     },
-    heroImage: '/images/unidades/stiep-hero.jpg',
-    mapQuery: 'Unidade Stiep Bruxo Team, Salvador - BA',
-    address: 'Endereço do Stiep (ajuste aqui)',
+    heroImage: '/stiep.jpeg',
+    mapQuery: 'Rua Arthur Fraga 374 - Vale dos Rios, Salvador - BA',
+    address: 'Rua Arthur Fraga, 374 - Vale dos Rios',
+    city: 'Salvador',
+    state: 'BA',
+    whatsapp: '5571992813525',
+    gallery: [
+      { src: '/stiep.jpeg',     alt: 'Bruxo Team — Stiep (fachada)' },
+      { src: '/stiep2.jpeg',   alt: 'Bruxo Team — Stiep (tatame 1)' },
+      { src: '/bruxo3.jpeg',   alt: 'Bruxo Team — Stiep (aula em andamento)' },
+    ],
+    instructors: [
+      {
+        name: 'Ybere Camargo',
+        role: 'Mestre',
+        image: '/ybere.jpeg',
+      }
+    ]
   },
-  {
-    slug: 'itapua',
-    name: 'Unidade Itapuã',
-    seo: {
-      title: 'Unidade Itapuã — Bruxo Team',
-      description: 'Conheça a unidade Itapuã da Bruxo Team.',
+{
+  slug: 'itapua',
+  name: 'Unidade Itapuã',
+  shortName: 'Itapuã',
+  description: 'Unidade Itapuã da Bruxo Team.',
+  seo: {
+    title: 'Unidade Itapuã — Bruxo Team',
+    description: 'Conheça a unidade Itapuã da Bruxo Team.',
+  },
+  heroImage: '/f.jpeg',
+  mapQuery: 'Rua Guararapes 18, Salvador - BA',
+  address: 'Rua Guararapes, 18',
+  city: 'Salvador',
+  state: 'BA',
+  whatsapp: '5571984708998',
+  gallery: [
+    { src: '/f.jpeg',   alt: 'Bruxo Team — Itapuã (fachada)' },
+    { src: '/f2.jpeg', alt: 'Bruxo Team — Itapuã (tatame 1)' },
+    { src: '/f4.jpeg', alt: 'Bruxo Team — Itapuã (aula em andamento)' },
+  ],
+  instructors: [
+    {
+      name: 'Flavio Barros',
+      role: 'Mestre',
+      image: '/flavio.jpeg',
     },
-    heroImage: '/images/unidades/itapua-hero.jpg',
-    mapQuery: 'Unidade Itapuã Bruxo Team, Salvador - BA',
-    address: 'Endereço de Itapuã (ajuste aqui)',
-  },
+    {
+      name: 'Thiago Bruxo',   // novo mestre
+      role: 'Mestre',
+      image: '/bruxo.jpeg',   // pode trocar por outra foto se quiser
+    },
+  ],
+}
+
 ];
 
+// --------------------------------------
 // Índice rápido por slug
+// --------------------------------------
 export const UNITS_INDEX: Record<UnitSlug, UnitDetail> = UNITS.reduce(
   (acc, u) => {
     acc[u.slug] = u;
