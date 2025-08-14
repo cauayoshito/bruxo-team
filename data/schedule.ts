@@ -1,12 +1,6 @@
 // data/schedule.ts
-export type Session = {
-  title: string;
-  time: string;
-  note?: string;
-};
-
+export type Session = { title: string; time: string; note?: string };
 export type DayKey = "seg" | "ter" | "qua" | "qui" | "sex" | "sab";
-
 export type GymSchedule = Record<DayKey, Session[]>;
 
 // ---------- BRUXO TEAM — STELLA ----------
@@ -42,9 +36,7 @@ export const scheduleStella: GymSchedule = {
     { title: "KIDS", time: "16:00" },
     { title: "MISTA", time: "20:15" },
   ],
-  sab: [
-    { title: "OPEN-MAT", time: "10:00" },
-  ],
+  sab: [{ title: "OPEN-MAT", time: "10:00" }],
 };
 
 // ---------- BRUXO TEAM — STIEP ----------
@@ -71,9 +63,19 @@ export const scheduleStiep: GymSchedule = {
   sab: [],
 };
 
-// ---------- MAPA DE HORÁRIOS POR UNIDADE ----------
-export const SCHEDULES_BY_UNIT: Record<string, GymSchedule | null> = {
+// ---------- BRUXO TEAM — ITAPUÃ ----------
+export const scheduleItapua: GymSchedule = {
+  seg: [],
+  ter: [{ title: "Mista", time: "20:00–21:20" }],
+  qua: [],
+  qui: [{ title: "Mista", time: "20:00–21:20" }],
+  sex: [],
+  sab: [],
+};
+
+// ---------- MAPA POR UNIDADE ----------
+export const SCHEDULES_BY_UNIT: Record<"stella" | "stiep" | "itapua", GymSchedule> = {
   stella: scheduleStella,
   stiep: scheduleStiep,
-  itapua: null, // Quando tiver os horários de Itapuã, substitua o null pelo GymSchedule
+  itapua: scheduleItapua,
 };

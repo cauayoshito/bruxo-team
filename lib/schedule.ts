@@ -1,59 +1,54 @@
 // lib/schedule.ts
-import type { ClassLabel, ScheduleRow } from "@/data/units";
+export type CanonicalLabel =
+  | "Jiu-Jitsu (com kimono)"
+  | "No-Gi (sem kimono)"
+  | "Mista"
+  | "Kids"
+  | "Feminino"
+  | "Competição"
+  | "60+"
+  | "Open Mat"
+  | "Avançado";
 
-// variações → padrão oficial
-export const LABEL_MAP: Record<string, ClassLabel> = {
-  // No-Gi
-  "nogi": "No-Gi (sem kimono)",
-  "no-gi": "No-Gi (sem kimono)",
-  "no gi": "No-Gi (sem kimono)",
-  "sem kimono": "No-Gi (sem kimono)",
+const strip = (s: string) =>
+  s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().trim();
 
-  // Kimono
-  "jiu-jitsu": "Jiu-Jitsu (com kimono)",
-  "bjj": "Jiu-Jitsu (com kimono)",
-  "jj": "Jiu-Jitsu (com kimono)",
-  "kimono": "Jiu-Jitsu (com kimono)",
-  "com kimono": "Jiu-Jitsu (com kimono)",
-
-  // Outros
-  "mista": "Mista",
-  "kids": "Kids",
-  "infantil": "Kids",          // troque para "Infantil" se preferir
-  "feminino": "Feminino",
-  "fem": "Feminino",
-  "competicao": "Competição",
-  "competição": "Competição",
-  "60+": "60+",
-  "open mat": "Open Mat",
-  "open-mat": "Open Mat",
-};
-
-export function normalizeLabel(input: string): ClassLabel {
-  const key = input.trim().toLowerCase();
-  return LABEL_MAP[key] ?? "Mista"; // fallback seguro
+export function normalizeLabel(input: string): CanonicalLabel {
+  const s = strip(input).replace(/\s+/g, " ");
+  if (/\b(no\s*gi|nogi|sem\s*kimono)\b/.test(s)) return "No-Gi (sem kimono)";
+  if (/\b(gi|kimono|com\s*kimono)\b/.test(s)) return "Jiu-Jitsu (com kimono)";
+  if (/\b(kids|infantil|kids\s*rt|rt\s*kids)\b/.test(s)) return "Kids";
+  if (/\b(feminino|women)\b/.test(s)) return "Feminino";
+  if (/\b(competicao|competição|comp)\b/.test(s)) return "Competição";
+  if (/\b(60\+|melhor\s+idade|idosos?)\b/.test(s)) return "60+";
+  if (/\b(open\s*mat|treino\s*livre)\b/.test(s)) return "Open Mat";
+  if (/\b(avancad[ao]|avançado|advanced)\b/.test(s)) return "Avançado";
+  return "Mista";
 }
 
-// garante HH:MM e usa travessão “–” p/ intervalos
-export function normalizeTime(raw: string): string {
-  const pad = (n: string) => n.padStart(2, "0");
-  const clean = raw.replace(/\s+/g, "").replace(/-/g, "–");
-
-  if (clean.includes("–")) {
-    const [a, b] = clean.split("–");
-    const [h1, m1 = "00"] = a.split(":");
-    const [h2, m2 = "00"] = b.split(":");
-    return `${pad(h1)}:${pad(m1)}–${pad(h2)}:${pad(m2)}`;
-    }
-  const [h, m = "00"] = clean.split(":");
-  return `${pad(h)}:${pad(m)}`;
+export function normalizeClock(part: string): string {
+  if (!part) throw new Error("Hora vazia");
+  let s = part.toLowerCase().replace(/\s+/g, "");
+  s = s.replace(/[h.]/g, ":");
+  s = s.replace(/^(\d{3,4})$/, (_m, g1: string) =>
+    g1.length === 3 ? `${g1[0]}:${g1.slice(1)}` : `${g1.slice(0, 2)}:${g1.slice(2)}`
+  );
+  if (!s.includes(":")) s = `${s}:00`;
+  const [hRaw, mRaw = "00"] = s.split(":");
+  const h = Math.max(0, Math.min(23, parseInt(hRaw || "0", 10)));
+  const m = Math.max(0, Math.min(59, parseInt(mRaw || "0", 10)));
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
-// normaliza um array de horários
-export function normalizeSchedule(rows: ScheduleRow[]): ScheduleRow[] {
-  return rows.map((r) => ({
-    ...r,
-    label: normalizeLabel(r.label as unknown as string),
-    time: normalizeTime(r.time),
-  }));
+export function normalizeTime(input: string): string {
+  if (!input) throw new Error("Entrada vazia");
+  let s = input.replace(/\u2013|\u2014|\u2212/g, "-");
+  s = s.replace(/\s+(a|as|às|ate|to)\s+/gi, "-").replace(/\s+/g, " ").trim();
+  if (!s.includes("-")) return normalizeClock(s);
+  const [startRaw, endRaw] = s.split("-", 2);
+  return `${normalizeClock(startRaw)}–${normalizeClock(endRaw)}`; // EN DASH
+}
+
+export function normalizeEntry(entry: { label: string; time: string }) {
+  return { label: normalizeLabel(entry.label), time: normalizeTime(entry.time) };
 }
