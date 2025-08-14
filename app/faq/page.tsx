@@ -214,6 +214,118 @@ const QA: { q: string; a: JSX.Element }[] = [
   },
 ];
 
+// --- JSON-LD para rich results (deve espelhar o conteúdo do FAQ acima) ---
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Como faço uma aula experimental?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Agende pelo WhatsApp da unidade: Matriz, Stiep, Itapuã ou Itacaré."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Nunca treinei Jiu-Jitsu. Posso começar do zero?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Há turmas MISTA e INICIANTES com ajuste de intensidade e técnica para iniciantes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre KIMONO (GI) e NO-GI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Com kimono usa pegadas no tecido; NO-GI é sem kimono, com foco em alavancas e controle do corpo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tem aulas para crianças? A partir de que idade?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Turmas KIDS a partir de 3–4 anos, com subdivisões por faixa etária."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Existe turma feminina?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Há turmas FEMININO e a aluna também pode treinar nas turmas MISTA."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais são os horários?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Os horários variam por unidade e projetos sociais; consulte as páginas das unidades e projetos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Preciso de kimono para a primeira aula?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. Vá com roupa esportiva; o kimono pode ser comprado depois."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quero competir. Como entro no time de competição?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fale com o professor. Há treinos específicos e orientação para inscrição, regras e preparação."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Os projetos sociais têm custo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "São iniciativas com gratuidade ou apoio; detalhes nas páginas dos projetos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Política de higiene e segurança",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unhas curtas, roupa limpa, chinelo fora do tatame, sem acessórios; informe lesões ao professor."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a frequência ideal e em quanto tempo vejo resultado?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recomendamos 2–3 treinos por semana. Resultados começam em 2–4 semanas, evoluem em 1–3 e 3–6 meses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tem estacionamento? Como chego?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Confira mapa e endereço na página da unidade; chegue com antecedência em horários de pico."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Valores e formas de pagamento",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Os valores variam por unidade e plano; fale com a unidade pelo WhatsApp."
+      }
+    }
+  ]
+} as const;
+
 export default function Page() {
   return (
     <main>
@@ -250,6 +362,12 @@ export default function Page() {
           </a>
         </div>
       </section>
+
+      {/* JSON-LD para rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
     </main>
   );
 }
