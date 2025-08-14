@@ -4,6 +4,17 @@ import { waLink } from "@/lib/whatsapp";
 import type { UnitDetail } from "@/data/units";
 
 export default function UnitHeader({ unit }: { unit: UnitDetail }) {
+  // Gera links só quando houver dados => nunca passa "undefined" para atributos string
+  const whatsappLink =
+    unit.whatsapp
+      ? waLink(unit.whatsapp, `Olá! Quero treinar na ${unit.name}.`)
+      : null;
+
+  const mapsLink =
+    unit.mapQuery
+      ? `https://www.google.com/maps?q=${encodeURIComponent(unit.mapQuery)}`
+      : null;
+
   return (
     <section className="container py-10 grid md:grid-cols-12 gap-6 items-center">
       <div className="md:col-span-5">
@@ -31,11 +42,10 @@ export default function UnitHeader({ unit }: { unit: UnitDetail }) {
         {unit.address && <p className="p mt-2 opacity-80">{unit.address}</p>}
 
         <div className="mt-6 flex gap-3">
-          {/* Só mostra o botão de WhatsApp se houver número */}
-          {unit.whatsapp ? (
+          {whatsappLink ? (
             <a
               className="btn-primary"
-              href={waLink(unit.whatsapp!, `Olá! Quero treinar na ${unit.name}.`)}
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -47,11 +57,10 @@ export default function UnitHeader({ unit }: { unit: UnitDetail }) {
             </a>
           )}
 
-          {/* Link para mapas, se houver query */}
-          {unit.mapQuery && (
+          {mapsLink && (
             <a
               className="btn-secondary"
-              href={`https://www.google.com/maps?q=${encodeURIComponent(unit.mapQuery)}`}
+              href={mapsLink}
               target="_blank"
               rel="noopener noreferrer"
             >
