@@ -2,11 +2,12 @@
 "use client";
 
 import Link from "next/link";
+import type { Route } from "next";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 type HomeItem = { id: "unidades" | "horarios" | "contato"; label: string };
-type PageItem = { href: string; label: string };
+type PageItem = { href: Route; label: string };
 
 const itemsHome: HomeItem[] = [
   { id: "unidades", label: "Unidades" },
@@ -14,10 +15,11 @@ const itemsHome: HomeItem[] = [
   { id: "contato",  label: "Contato" },
 ];
 
+// Tipamos os hrefs como Route para agradar o typedRoutes
 const itemsPages: PageItem[] = [
-  { href: "/competicao",         label: "Competição" },
-  { href: "/loja",               label: "Loja" },
-  { href: "/projetos-sociais",   label: "Projetos Sociais" },
+  { href: "/competicao" as Route,       label: "Competição" },
+  { href: "/loja" as Route,             label: "Loja" },
+  { href: "/projetos-sociais" as Route, label: "Projetos Sociais" },
 ];
 
 const toHomeHash = (id: HomeItem["id"]) =>
@@ -25,20 +27,19 @@ const toHomeHash = (id: HomeItem["id"]) =>
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-
   const close = () => setOpen(false);
 
   return (
     <nav className="w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex items-center justify-between py-3">
-        {/* Logo / nome do site */}
+        {/* Logo */}
         <Link href="/" className="font-semibold text-lg">
           Bruxo Team
         </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-2">
-          {/* Anchors da home */}
+          {/* Âncoras da home */}
           {itemsHome.map((it) => (
             <Link key={it.id} href={toHomeHash(it.id)} className="px-3 py-2 hover:underline">
               {it.label}
@@ -68,7 +69,6 @@ export default function Nav() {
       {open && (
         <div className="md:hidden border-t">
           <div className="container py-2 flex flex-col">
-            {/* Anchors da home */}
             {itemsHome.map((it) => (
               <Link
                 key={it.id}
@@ -80,12 +80,11 @@ export default function Nav() {
               </Link>
             ))}
 
-            {/* Páginas */}
             {itemsPages.map((it) => (
               <Link
                 key={it.href}
                 href={it.href}
-                className="px-2 py-3 hover:bg-white/5 rounded-lg"
+                className="px-2 py-3 hover:bg白/5 rounded-lg"
                 onClick={close}
               >
                 {it.label}
