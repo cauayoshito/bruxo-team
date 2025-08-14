@@ -127,7 +127,7 @@ export const UNITS: UnitDetail[] = [
     gallery: [
       { src: '/stiep.jpeg',     alt: 'Bruxo Team — Stiep (fachada)' },
       { src: '/stiep2.jpeg',   alt: 'Bruxo Team — Stiep (tatame 1)' },
-      { src: '/stiep3.jpeg',   alt: 'Bruxo Team — Stiep (aula em andamento)' },
+      { src: '/bruxo3.jpeg',   alt: 'Bruxo Team — Stiep (aula em andamento)' },
     ],
     instructors: [
       {
