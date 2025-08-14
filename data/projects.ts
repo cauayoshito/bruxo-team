@@ -4,74 +4,45 @@ import type { DayKey } from "@/data/schedule";
 export type Project = {
   slug: string;
   name: string;
-  unitSlug?: "itapua";
-  location: string;
+  unitSlug?: string; // slug da unidade para puxar grade
+  location?: string;
   description?: string;
   schedule: Partial<Record<DayKey, Array<{ title: string; time: string }>>>;
   gallery?: Array<{ src: string; alt?: string; width?: number; height?: number }>;
 };
 
+// Lista de projetos
 export const PROJECTS: Project[] = [
   {
     slug: "rato-de-tatame-alto-do-macaco",
-    name: "Rato de Tatame — Alto do Macaco",
+    name: "Rato de Tatame – Alto do Macaco",
     unitSlug: "itapua",
-    location: "Alto do Macaco, Itapuã",
+    location: "Itapuã, Salvador - BA",
     description:
-      "Projeto social da Bruxo Team com foco em inclusão, disciplina e desenvolvimento por meio do Jiu-Jitsu.",
+      "Projeto social da Bruxo Team voltado para a comunidade do Alto do Macaco, oferecendo aulas gratuitas de Jiu-Jitsu para crianças e adolescentes.",
     schedule: {
-      seg: [
-        { time: "18:00", title: "Kids RT" },
-        { time: "19:00", title: "Kids RT" },
-        { time: "20:00", title: "Adulto" },
-      ],
-      ter: [
-        { time: "08:00", title: "60+" },
-        { time: "09:00", title: "Mista" },
-        { time: "18:00", title: "Competição" },
-      ],
-      qua: [
-        { time: "18:00", title: "Kids RT" },
-        { time: "19:00", title: "Kids RT" },
-        { time: "20:00", title: "Adulto" },
-      ],
-      qui: [
-        { time: "08:00", title: "60+" },
-        { time: "09:00", title: "Mista" },
-        { time: "18:00", title: "Competição" },
-      ],
+      seg: [{ title: "Infantil", time: "18:00" }, { title: "Juvenil/Adulto", time: "19:00" }],
+      qua: [{ title: "Infantil", time: "18:00" }, { title: "Juvenil/Adulto", time: "19:00" }],
+      sex: [{ title: "Infantil", time: "18:00" }, { title: "Juvenil/Adulto", time: "19:00" }],
     },
-    gallery: [],
+    gallery: [
+      { src: "/images/projetos/rato-1.jpg", alt: "Aula infantil no projeto Rato de Tatame" },
+      { src: "/images/projetos/rato-2.jpg", alt: "Treino de jovens atletas" },
+    ],
   },
   {
-    slug: "rua-da-ilha-sparta-squad",
-    name: "Rua da Ilha — Sparta Squad",
-    unitSlug: "itapua",
-    location: "Rua da Ilha",
-    description: "Projeto em estruturação. Horários serão divulgados em breve.",
-    schedule: {},
-    gallery: [],
-  },
-  {
-    slug: "bruxo-team-nova-brasilia-de-itapua",
-    name: "Bruxo Team Nova Brasília de Itapuã",
-    unitSlug: "itapua",
-    location: "Nova Brasília de Itapuã",
-    description:
-      "Projeto com turmas Kids e Avançado para desenvolvimento técnico e físico.",
+    slug: "projeto-exemplo-2",
+    name: "Projeto Exemplo 2",
+    location: "Bairro Exemplo, Salvador - BA",
+    description: "Outro projeto social exemplo para teste.",
     schedule: {
-      seg: [
-        { time: "20:00–21:00", title: "Kids" },
-        { time: "21:00–22:00", title: "Avançado" },
-      ],
-      qua: [
-        { time: "20:00–21:00", title: "Kids" },
-        { time: "21:00–22:00", title: "Avançado" },
-      ],
+      ter: [{ title: "Turma Única", time: "18:30" }],
+      qui: [{ title: "Turma Única", time: "18:30" }],
     },
-    gallery: [],
   },
 ];
 
-export const PROJECTS_INDEX: Record<string, Project> =
-  PROJECTS.reduce((acc, p) => ((acc[p.slug] = p), acc), {} as Record<string, Project>);
+// Index para acesso rápido por slug
+export const PROJECTS_INDEX: Record<string, Project> = Object.fromEntries(
+  PROJECTS.map((p) => [p.slug, p])
+);
