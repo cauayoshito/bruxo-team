@@ -26,7 +26,11 @@ export const PROJECTS: Project[] = [
     heroImage: "/itapua.jpeg",
     mapQuery: "2a Travessa 17 de Setembro 12, Itapuã, Salvador - BA",
     whatsapp: "5571991505420",
-    // gallery: [{ src: "/projects/rato-1.jpg" }, { src: "/projects/rato-2.jpg" }],
+    gallery: [
+      { src: "/itapua.jpeg", alt: "Aulas do projeto social em Itapuã" },
+      { src: "/itapua2.jpeg",     alt: "Treino com alunos do projeto" },
+      { src: "/itapua3.jpeg",     alt: "Foto de turma — Projeto Social Itapuã" },
+    ],
   },
   {
     slug: "projeto-social-armindo-biriba",
@@ -35,9 +39,13 @@ export const PROJECTS: Project[] = [
     description:
       "Treinos focados em autoconfiança, condicionamento e defesa pessoal em ambiente seguro e acolhedor.",
     heroImage: "/p2.jpeg",
-    mapQuery:
-      "Centro Esportivo Armindo Biriba, Rua da Ilha, Itapuã, Salvador - BA",
+    mapQuery: "Centro Esportivo Armindo Biriba, Rua da Ilha, Itapuã, Salvador - BA",
     whatsapp: "5571991843706",
+    gallery: [
+      { src: "/p2.jpeg",    alt: "Treino no Armindo Biriba" },
+      { src: "/p.jpeg",     alt: "Turma em atividade" },
+      { src: "/stiep2.jpeg", alt: "Registro de grupo do projeto" },
+    ],
   },
   {
     slug: "projeto-social-academia-impacto",
@@ -48,6 +56,11 @@ export const PROJECTS: Project[] = [
     heroImage: "/p.jpeg",
     mapQuery: "Academia Impacto, Rua Reinado Calixto, Itapuã, Salvador - BA",
     whatsapp: "5571991843706",
+    gallery: [
+      { src: "/p.jpeg",       alt: "Equipe do projeto social" },
+      { src: "/stella2.jpeg", alt: "Treino coletivo solidário" },
+      { src: "/stella3.jpeg", alt: "Ação beneficente com a comunidade" },
+    ],
   },
 ];
 
