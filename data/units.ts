@@ -146,7 +146,7 @@ export const UNITS: UnitDetail[] = [
     title: 'Unidade Itapuã — Bruxo Team',
     description: 'Conheça a unidade Itapuã da Bruxo Team.',
   },
-  heroImage: '/itapua.jpeg',
+  heroImage: '/f.jpeg',
   mapQuery: 'Rua Guararapes 18, Salvador - BA',
   address: 'Rua Guararapes, 18',
   city: 'Salvador',
