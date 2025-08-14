@@ -1,29 +1,31 @@
-export default function Projects(){
-  const items = [
-    {
-      title: "Jiu-Jitsu para Todos",
-      desc: "Aulas gratuitas ou com valor simbólico para crianças e adolescentes de baixa renda, promovendo inclusão, disciplina e desenvolvimento físico e mental."
-    },
-    {
-      title: "Mulheres no Tatame",
-      desc: "Treinos focados em autoconfiança, condicionamento e defesa pessoal, em um ambiente seguro e motivador para todas as idades."
-    },
-    {
-      title: "Guerreiros da Comunidade",
-      desc: "Eventos beneficentes e mutirões com instituições locais para arrecadar alimentos, roupas e brinquedos para famílias em vulnerabilidade."
-    },
-  ];
+// components/Projects.tsx
+import ProjectCard from "@/components/ProjectCard";
+import { PROJECTS } from "@/data/projects";
+import Link from "next/link";
+
+export default function Projects() {
   return (
-    <section id="projetos" className="container py-16">
+    <section id="projetos-sociais" className="container py-16 section">
       <h2 className="h2">Projetos Sociais</h2>
-      <div className="mt-8 grid md:grid-cols-3 gap-6">
-        {items.map((it)=>(
-          <article key={it.title} className="card p-6">
-            <h3 className="h3">{it.title}</h3>
-            <p className="p mt-3">{it.desc}</p>
-            <a className="btn-outline mt-6 inline-block" href="#contato">Apoiar iniciativa</a>
-          </article>
-        ))}
+      <p className="p mt-3 max-w-3xl">
+        Iniciativas comunitárias apoiadas pela Bruxo Team. Acesse a página de
+        cada projeto para ver horários, localização e como participar.
+      </p>
+
+      {PROJECTS.length === 0 ? (
+        <p className="p mt-8 opacity-80">Nenhum projeto cadastrado ainda.</p>
+      ) : (
+        <div className="mt-8 grid md:grid-cols-3 gap-6">
+          {PROJECTS.map((p) => (
+            <ProjectCard key={p.slug} project={p} />
+          ))}
+        </div>
+      )}
+
+      <div className="mt-8">
+        <Link href="/projetos-sociais" className="btn-secondary">
+          Ver todos os projetos
+        </Link>
       </div>
     </section>
   );
