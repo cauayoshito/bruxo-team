@@ -85,7 +85,7 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Matriz — Bruxo Team',
       description: 'Conheça a unidade Matriz da Bruxo Team.',
     },
-    heroImage: '/matriz.jpeg',
+    heroImage: '/stella.jpeg',
     mapQuery: 'Unidade Matriz Bruxo Team, Alameda Dilson Jatahy Fonseca 858 - Stella Maris, Salvador - BA',
     address: 'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris',
     city: 'Salvador',
@@ -114,7 +114,7 @@ export const UNITS: UnitDetail[] = [
       description: 'Conheça a unidade Stiep da Bruxo Team.',
     },
     heroImage: '/stiep.jpeg',
-    mapQuery: 'Unidade Stiep Bruxo Team, Rua Arthur Fraga 374 - Vale dos Rios, Salvador - BA',
+    mapQuery: 'Rua Arthur Fraga 374 - Vale dos Rios, Salvador - BA',
     address: 'Rua Arthur Fraga, 374 - Vale dos Rios',
     city: 'Salvador',
     state: 'BA',
@@ -136,8 +136,8 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Itapuã — Bruxo Team',
       description: 'Conheça a unidade Itapuã da Bruxo Team.',
     },
-    heroImage: '/iitapua.jpeg',
-    mapQuery: 'Unidade Itapuã Bruxo Team, Rua Guararapes 18, Salvador - BA',
+    heroImage: '/itapua.jpeg',
+    mapQuery: 'Rua Guararapes 18, Salvador - BA',
     address: 'Rua Guararapes, 18',
     city: 'Salvador',
     state: 'BA',
@@ -146,7 +146,7 @@ export const UNITS: UnitDetail[] = [
       {
         name: 'Flavio Barros',
         role: 'Mestre',
-        image: '/images/instrutores/flavio-barros.jpg',
+        image: '/flavio.jpeg',
       }
     ]
   },
