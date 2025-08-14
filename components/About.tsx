@@ -1,6 +1,52 @@
+// components/About.tsx
+"use client";
+
 import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+// 👉 coloque as imagens em /public e ajuste os nomes aqui:
+const SLIDES = [
+  { src: "/s1.jpeg", alt: "Treino na Bruxo Team" },
+  { src: "/s2.jpeg", alt: "Equipe reunida" },
+  { src: "/s3.jpeg", alt: "Aula em andamento" },
+   { src: "/s4.jpeg", alt: "Treino na Bruxo Team" },
+  { src: "/s5.jpeg", alt: "Equipe reunida" },
+];
+
+const AUTOPLAY_MS = 5000;
 
 export default function About() {
+  const [i, setI] = useState(0);
+  const count = SLIDES.length;
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const hoverRef = useRef(false);
+
+  const next = () => setI((v) => (v + 1) % count);
+  const prev = () => setI((v) => (v - 1 + count) % count);
+
+  // autoplay (pausa em hover/aba oculta)
+  useEffect(() => {
+    const tick = () => {
+      if (!hoverRef.current && document.visibilityState === "visible") next();
+    };
+    timer.current && clearInterval(timer.current);
+    timer.current = setInterval(tick, AUTOPLAY_MS);
+    return () => timer.current && clearInterval(timer.current);
+  }, [i, count]);
+
+  // ids p/ acessibilidade
+  const ids = useMemo(() => SLIDES.map((_, k) => `about-slide-${k}`), []);
+
+  // swipe touch
+  const startX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => (startX.current = e.touches[0].clientX);
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (startX.current == null) return;
+    const dx = e.changedTouches[0].clientX - startX.current;
+    if (Math.abs(dx) > 40) (dx > 0 ? prev() : next());
+    startX.current = null;
+  };
+
   return (
     <section id="sobre" className="container py-16 section">
       <div className="grid md:grid-cols-12 gap-8 items-start">
@@ -17,37 +63,70 @@ export default function About() {
           </p>
           <p className="p mt-4">
             Guiada por valores como <strong>respeito, humildade e persistência</strong>,
-            a Bruxo Team rapidamente se destacou pela formação de atletas
-            comprometidos — dos iniciantes aos competidores de alto rendimento.
-            A equipe <strong>cresceu e se consolidou em Salvador</strong>, atraindo alunos
+            a equipe <strong>cresceu e se consolidou em Salvador</strong>, reunindo alunos
             de diferentes idades e histórias, sempre com o objetivo de
             <strong> transformar vidas por meio do esporte</strong>.
           </p>
           <p className="p mt-4">
-            Hoje, a Bruxo Team representa não apenas uma equipe de Jiu-Jitsu,
-            mas um <strong>movimento de fortalecimento pessoal e coletivo</strong>, onde
-            cada treino é uma oportunidade de evolução <strong>dentro e fora do
-            tatame</strong>.
+            Hoje, a Bruxo Team representa um <strong>movimento de fortalecimento pessoal
+            e coletivo</strong>, onde cada treino é uma oportunidade de evolução
+            <strong> dentro e fora do tatame</strong>.
           </p>
         </div>
 
-        {/* imagem – use a arte “quem somos” que você enviou */}
+        {/* carrossel */}
         <div className="md:col-span-5">
-          <div className="card overflow-hidden">
-            <Image
-              src="/bg.jpeg"   // coloque o nome correto do arquivo no /public
-              alt="Sobre a Bruxo Team Jiu-Jitsu"
-              width={900}
-              height={1200}
-              className="w-full h-auto object-cover"
-              priority
-            />
-          </div>
-          {/* CTA opcional */}
-          <a
-            href="#contato"
-            className="btn-primary mt-4 inline-flex"
+          <div
+            className="relative w-full h-[420px] md:h-[540px] rounded-2xl overflow-hidden border"
+            onMouseEnter={() => (hoverRef.current = true)}
+            onMouseLeave={() => (hoverRef.current = false)}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            aria-roledescription="carousel"
+            aria-label="Galeria — Sobre a Bruxo Team"
           >
+            {/* slides cross-fade */}
+            {SLIDES.map((s, k) => (
+              <div
+                key={s.src}
+                id={ids[k]}
+                aria-hidden={k !== i}
+                className={`absolute inset-0 transition-opacity duration-700 ${
+                  k === i ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  fill
+                  className="object-cover"
+                  priority={k === 0}
+                  sizes="(min-width: 768px) 40vw, 100vw"
+                />
+              </div>
+            ))}
+
+            {/* gradiente sutil */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+
+            {/* dots */}
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+              {SLIDES.map((_, k) => (
+                <button
+                  key={k}
+                  aria-label={`Ir para imagem ${k + 1}`}
+                  aria-controls={ids[k]}
+                  onClick={() => setI(k)}
+                  className={`h-2 rounded-full transition-all ${
+                    i === k ? "w-8 bg-white" : "w-2 bg-white/50 hover:bg-white/70"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* CTA opcional */}
+          <a href="#contato" className="btn-primary mt-4 inline-flex">
             Falar com a equipe
           </a>
         </div>
