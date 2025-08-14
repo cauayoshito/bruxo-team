@@ -2,6 +2,7 @@
 import type { UnitDetail } from "@/data/units";
 import type { GymSchedule, DayKey } from "@/data/schedule";
 import { SCHEDULES_BY_UNIT } from "@/data/schedule";
+import { normalizeLabel, normalizeTime } from "@/lib/schedule";
 
 const DAY_LABEL: Record<DayKey, string> = {
   seg: "Seg",
@@ -16,14 +17,13 @@ function toRows(schedule: GymSchedule) {
   return (Object.keys(schedule) as DayKey[]).flatMap((day) =>
     schedule[day].map((s) => ({
       day,
-      label: s.title,
-      time: s.time,
+      label: normalizeLabel(s.title), // ← padroniza rótulos
+      time: normalizeTime(s.time),    // ← padroniza horários
     }))
   );
 }
 
 export default function UnitSchedule({ unit }: { unit: UnitDetail }) {
-  // pega o quadro certo pela URL (stella | stiep | itapua)
   const schedule = SCHEDULES_BY_UNIT[unit.slug] ?? null;
   if (!schedule) return null;
 
@@ -32,6 +32,13 @@ export default function UnitSchedule({ unit }: { unit: UnitDetail }) {
   return (
     <section id="horarios" className="container py-12">
       <h2 className="h2">Horários</h2>
+
+      {/* legenda opcional para educar usuário e time */}
+      <p className="p mt-2 text-white/70">
+        <b>No-Gi (sem kimono)</b> = treino sem kimono •{" "}
+        <b>Jiu-Jitsu (com kimono)</b> = treino tradicional
+      </p>
+
       <div className="mt-6 overflow-x-auto rounded-xl border border-border">
         <table className="w-full text-sm table-auto">
           <thead className="text-white/80">
