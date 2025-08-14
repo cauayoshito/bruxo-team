@@ -91,6 +91,11 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571991843706',
+    gallery: [
+      { src: '/stella.jpeg',     alt: 'Bruxo Team — Matriz (fachada)' },
+      { src: '/stella2.jpeg',   alt: 'Bruxo Team — Matriz (tatame 1)' },
+      { src: '/stella3.jpeg',   alt: 'Bruxo Team — Matriz (aula em andamento)' },
+    ],
     instructors: [
       {
         name: 'Tiago Bruxo',
@@ -119,6 +124,11 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571992813525',
+    gallery: [
+      { src: '/stiep.jpeg',     alt: 'Bruxo Team — Stiep (fachada)' },
+      { src: '/stiep2.jpeg',   alt: 'Bruxo Team — Stiep (tatame 1)' },
+      { src: '/stiep3.jpeg',   alt: 'Bruxo Team — Stiep (aula em andamento)' },
+    ],
     instructors: [
       {
         name: 'Ybere Camargo',
@@ -142,6 +152,11 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571984708998',
+    gallery: [
+      { src: '/itapua.jpeg',     alt: 'Bruxo Team — Itapuã (fachada)' },
+      { src: '/itapua2.jpeg',   alt: 'Bruxo Team — Itapuã (tatame 1)' },
+      { src: '/itapua3.jpeg',   alt: 'Bruxo Team — Itapuã (aula em andamento)' },
+    ],
     instructors: [
       {
         name: 'Flavio Barros',
