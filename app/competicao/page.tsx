@@ -10,24 +10,11 @@ export const metadata = {
 };
 
 export default function Page() {
-  // 👉 Troque pelos nomes reais que você já colocou em /public
-  const IMAGES = [
-    { src: "/competidores/c01.jpg", alt: "Atleta da Bruxo Team em competição" },
-    { src: "/competidores/c02.jpg", alt: "Final de luta" },
-    { src: "/competidores/c03.jpg", alt: "Pódio da equipe" },
-    { src: "/competidores/c04.jpg", alt: "Raspe e estabiliza" },
-    { src: "/competidores/c05.jpg", alt: "Chamada de peso" },
-    { src: "/competidores/c06.jpg", alt: "Guarda fechada" },
-    { src: "/competidores/c07.jpg", alt: "Chave de braço" },
-    { src: "/competidores/c08.jpg", alt: "Arbitragem e atletas" },
-    { src: "/competidores/c09.jpg", alt: "Foto oficial da equipe" },
-    { src: "/competidores/c10.jpg", alt: "Entrada no tatame" },
-    { src: "/competidores/c11.jpg", alt: "Medalhas" },
-    { src: "/competidores/c12.jpg", alt: "Guarda borboleta" },
-    { src: "/competidores/c13.jpg", alt: "Controle lateral" },
-    { src: "/competidores/c14.jpg", alt: "Pódio faixa colorida" },
-    { src: "/competidores/c15.jpg", alt: "Bruxo Team reunida" },
-  ];
+  // agora puxa de /public/pro/1.jpeg ... /pro/15.jpeg
+  const IMAGES = Array.from({ length: 15 }, (_, i) => ({
+    src: `/pro/${i + 1}.jpeg`,
+    alt: `Competidor ${i + 1} — Bruxo Team`,
+  }));
 
   return (
     <main>
