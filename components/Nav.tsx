@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import type { Route } from "next";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -15,7 +16,6 @@ const itemsHome: HomeItem[] = [
   { id: "contato",  label: "Contato" },
 ];
 
-// Tipamos os hrefs como Route para agradar o typedRoutes
 const itemsPages: PageItem[] = [
   { href: "/competicao" as Route,       label: "Competição" },
   { href: "/loja" as Route,             label: "Loja" },
@@ -33,20 +33,23 @@ export default function Nav() {
     <nav className="w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex items-center justify-between py-3">
         {/* Logo */}
-        <Link href="/" className="font-semibold text-lg">
-          Bruxo Team
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo-bruxo.png"
+            alt="Logo Bruxo Team"
+            width={40} // ajuste conforme necessário
+            height={40}
+            priority
+          />
         </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-2">
-          {/* Âncoras da home */}
           {itemsHome.map((it) => (
             <Link key={it.id} href={toHomeHash(it.id)} className="px-3 py-2 hover:underline">
               {it.label}
             </Link>
           ))}
-
-          {/* Páginas */}
           {itemsPages.map((it) => (
             <Link key={it.href} href={it.href} className="px-3 py-2 hover:underline">
               {it.label}
@@ -79,12 +82,11 @@ export default function Nav() {
                 {it.label}
               </Link>
             ))}
-
             {itemsPages.map((it) => (
               <Link
                 key={it.href}
                 href={it.href}
-                className="px-2 py-3 hover:bg白/5 rounded-lg"
+                className="px-2 py-3 hover:bg-white/5 rounded-lg"
                 onClick={close}
               >
                 {it.label}
