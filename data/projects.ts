@@ -8,6 +8,12 @@ export type Project = {
   address?: string;
   mapQuery?: string;
   whatsapp?: string;     // 55DDDxxxxxxx
+
+  // opcional — para a ProjectGallery
+  gallery?: Array<{ src: string; alt?: string; width?: number; height?: number }>;
+
+  // opcional — SEO
+  seo?: { title: string; description: string };
 };
 
 export const PROJECTS: Project[] = [
@@ -20,6 +26,7 @@ export const PROJECTS: Project[] = [
     heroImage: "/itapua.jpeg",
     mapQuery: "2a Travessa 17 de Setembro 12, Itapuã, Salvador - BA",
     whatsapp: "5571991505420",
+    // gallery: [{ src: "/projects/rato-1.jpg" }, { src: "/projects/rato-2.jpg" }],
   },
   {
     slug: "projeto-social-armindo-biriba",
@@ -28,7 +35,8 @@ export const PROJECTS: Project[] = [
     description:
       "Treinos focados em autoconfiança, condicionamento e defesa pessoal em ambiente seguro e acolhedor.",
     heroImage: "/p2.jpeg",
-    mapQuery: "Centro Esportivo Armindo Biriba, Rua da Ilha, Itapuã, Salvador - BA",
+    mapQuery:
+      "Centro Esportivo Armindo Biriba, Rua da Ilha, Itapuã, Salvador - BA",
     whatsapp: "5571991843706",
   },
   {
