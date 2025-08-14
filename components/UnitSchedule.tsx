@@ -1,56 +1,83 @@
 // components/UnitSchedule.tsx
-import { SCHEDULES_BY_UNIT, type DayKey, type GymSchedule } from "@/data/schedule";
+"use client";
+
 import type { UnitDetail } from "@/data/units";
-import { normalizeLabel, normalizeTime } from "@/lib/schedule";
-
-const DAY_LABEL: Record<DayKey, string> = {
-  seg: "Seg",
-  ter: "Ter",
-  qua: "Qua",
-  qui: "Qui",
-  sex: "Sex",
-  sab: "Sáb",
-};
-
-const ORDERED_DAYS: DayKey[] = ["seg", "ter", "qua", "qui", "sex", "sab"];
-
-function hasAnySession(schedule: GymSchedule): boolean {
-  return Object.values(schedule).some((arr) => arr && arr.length > 0);
-}
+import { SCHEDULES_BY_UNIT } from "@/data/schedule";
+import {
+  toOrderedTable,
+  DAY_LABEL,
+  getNextClasses,
+  formatRowHuman,
+} from "@/lib/schedule";
 
 export default function UnitSchedule({ unit }: { unit: UnitDetail }) {
-  // Agora o tipo bate com UnitSlug (matriz | stiep | itapua), então compila certinho
-  const schedule = SCHEDULES_BY_UNIT[unit.slug];
+  const schedule = SCHEDULES_BY_UNIT[unit.slug] ?? null;
+  if (!schedule) return null;
 
-  // Se não houver grade ou estiver vazia, não renderiza a seção
-  if (!schedule || !hasAnySession(schedule)) return null;
+  const table = toOrderedTable(schedule);
+  const next = getNextClasses(schedule, 3); // opcional: próximas 3
 
   return (
-    <section className="container py-12">
-      <h2 className="h2">Horários</h2>
+    <section className="space-y-8">
+      {/* Cabeçalho da unidade (endereço/contato, se houver) */}
+      <header className="space-y-1">
+        <h2 className="text-2xl font-semibold">{unit.name}</h2>
+        {(unit.street || unit.whatsapp || unit.instagram) && (
+          <div className="text-sm text-muted-foreground space-x-3">
+            {unit.street && <span>{unit.street}</span>}
+            {unit.whatsapp && <span>• WhatsApp: {unit.whatsapp}</span>}
+            {unit.instagram && <span>• Instagram: {unit.instagram}</span>}
+          </div>
+        )}
+      </header>
 
-      <div className="mt-6 overflow-x-auto">
-        <table className="min-w-[640px] text-sm">
-          <thead>
-            <tr className="[&>th]:text-left [&>th]:pr-6 [&>th]:py-2">
-              <th>Dia</th>
-              <th>Turma</th>
-              <th>Horário</th>
-            </tr>
-          </thead>
-          <tbody className="[&>tr>td]:py-2 [&>tr>td]:pr-6">
-            {ORDERED_DAYS.flatMap((day) => {
-              const rows = schedule[day] ?? [];
-              return rows.map((s, idx) => (
-                <tr key={`${day}-${idx}`}>
-                  <td>{DAY_LABEL[day]}</td>
-                  <td>{normalizeLabel(s.title)}</td>
-                  <td>{normalizeTime(s.time)}</td>
-                </tr>
-              ));
-            })}
-          </tbody>
-        </table>
+      {/* Próximas aulas (remova se não quiser) */}
+      {next.length > 0 && (
+        <div className="rounded-xl border p-4">
+          <h3 className="font-medium mb-2">Próximas aulas</h3>
+          <ul className="text-sm space-y-1">
+            {next.map((n, i) => (
+              <li key={i} className="opacity-90">
+                {formatRowHuman(n)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Tabela por dia */}
+      <div className="grid md:grid-cols-3 gap-6">
+        {(Object.keys(table) as (keyof typeof table)[]).map((day) => {
+          const rows = table[day];
+          if (!rows || rows.length === 0) {
+            return (
+              <div
+                key={day}
+                className="rounded-xl border p-4 opacity-70"
+              >
+                <h3 className="font-medium mb-3">{DAY_LABEL[day]}</h3>
+                <p className="text-sm text-muted-foreground">Sem aulas</p>
+              </div>
+            );
+          }
+
+          return (
+            <div key={day} className="rounded-xl border p-4">
+              <h3 className="font-medium mb-3">{DAY_LABEL[day]}</h3>
+              <ul className="space-y-2">
+                {rows.map((r, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center justify-between text-sm"
+                  >
+                    <span className="font-medium">{r.label}</span>
+                    <span className="tabular-nums opacity-80">{r.time}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
