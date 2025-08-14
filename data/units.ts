@@ -21,7 +21,6 @@ export type ClassLabel =
 
 // --------------------------------------
 // Linha de horário (já padronizada)
-// time: "HH:MM" ou "HH:MM–HH:MM"
 // --------------------------------------
 export type ScheduleRow = {
   day: DayKey;
@@ -59,8 +58,8 @@ export type UnitDetail = {
   seo?: { title: string; description: string };
 
   // Mídia e mapa (opcionais)
-  heroImage?: string; // URL absoluta ou caminho público (/images/...)
-  mapQuery?: string;  // texto para Google Maps (ex.: "Rua X, 123 - Salvador")
+  heroImage?: string;
+  mapQuery?: string;
 
   // Galeria (opcional)
   gallery?: Array<{ src: string; alt?: string; width?: number; height?: number }>;
@@ -73,7 +72,7 @@ export type UnitDetail = {
 };
 
 // --------------------------------------
-// Lista de unidades (ajuste os dados reais quando tiver)
+// Lista de unidades
 // --------------------------------------
 export const UNITS: UnitDetail[] = [
   {
@@ -86,13 +85,24 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Matriz — Bruxo Team',
       description: 'Conheça a unidade Matriz da Bruxo Team.',
     },
-    heroImage: '/images/unidades/matriz-hero.jpg',
-    mapQuery: 'Unidade Matriz Bruxo Team, Salvador - BA',
-    address: 'Endereço da Matriz (ajuste aqui)',
-    // Exemplo de instrutores (opcional)
-    // instructors: [
-    //   { name: 'Fulano da Silva', role: 'Faixa-Preta', instagram: '@fulano.bjj' },
-    // ],
+    heroImage: '/matriz.jpeg',
+    mapQuery: 'Unidade Matriz Bruxo Team, Alameda Dilson Jatahy Fonseca 858 - Stella Maris, Salvador - BA',
+    address: 'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris',
+    city: 'Salvador',
+    state: 'BA',
+    whatsapp: '5571991843706',
+    instructors: [
+      {
+        name: 'Tiago Bruxo',
+        role: 'Mestre',
+        image: '/bruxo.jpeg',
+      },
+      {
+        name: 'Jean Ribeiro',
+        role: 'Mestre Kids',
+        image: '/jotape.jpeg',
+      }
+    ]
   },
   {
     slug: 'stiep',
@@ -103,9 +113,19 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Stiep — Bruxo Team',
       description: 'Conheça a unidade Stiep da Bruxo Team.',
     },
-    heroImage: '/images/unidades/stiep-hero.jpg',
-    mapQuery: 'Unidade Stiep Bruxo Team, Salvador - BA',
-    address: 'Endereço do Stiep (ajuste aqui)',
+    heroImage: '/stiep.jpeg',
+    mapQuery: 'Unidade Stiep Bruxo Team, Rua Arthur Fraga 374 - Vale dos Rios, Salvador - BA',
+    address: 'Rua Arthur Fraga, 374 - Vale dos Rios',
+    city: 'Salvador',
+    state: 'BA',
+    whatsapp: '5571992813525',
+    instructors: [
+      {
+        name: 'Ybere Camargo',
+        role: 'Mestre',
+        image: '/ybere.jpeg',
+      }
+    ]
   },
   {
     slug: 'itapua',
@@ -116,14 +136,24 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Itapuã — Bruxo Team',
       description: 'Conheça a unidade Itapuã da Bruxo Team.',
     },
-    heroImage: '/images/unidades/itapua-hero.jpg',
-    mapQuery: 'Unidade Itapuã Bruxo Team, Salvador - BA',
-    address: 'Endereço de Itapuã (ajuste aqui)',
+    heroImage: '/iitapua.jpeg',
+    mapQuery: 'Unidade Itapuã Bruxo Team, Rua Guararapes 18, Salvador - BA',
+    address: 'Rua Guararapes, 18',
+    city: 'Salvador',
+    state: 'BA',
+    whatsapp: '5571984708998',
+    instructors: [
+      {
+        name: 'Flavio Barros',
+        role: 'Mestre',
+        image: '/images/instrutores/flavio-barros.jpg',
+      }
+    ]
   },
 ];
 
 // --------------------------------------
-// Índice rápido por slug (acesso O(1))
+// Índice rápido por slug
 // --------------------------------------
 export const UNITS_INDEX: Record<UnitSlug, UnitDetail> = UNITS.reduce(
   (acc, u) => {
