@@ -41,7 +41,7 @@ export default function Hero() {
 
       <p className="p mt-4 max-w-2xl">
         Jiu-Jitsu para <strong>iniciantes, Kids e competidores</strong> em Salvador.
-        Treinos pela manhã, tarde e noite em <strong>Matriz (Stella)</strong>, <strong>Stiep</strong> e <strong>Itapuã</strong>.
+        Treinos pela manhã, tarde e noite em <strong>Bruxo Team Matriz</strong>, <strong>Stiep</strong> e <strong>Itapuã</strong>.
         <span className="ml-1 font-semibold">Primeira aula gratuita.</span>
       </p>
 
