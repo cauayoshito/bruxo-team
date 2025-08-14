@@ -137,34 +137,40 @@ export const UNITS: UnitDetail[] = [
       }
     ]
   },
-  {
-    slug: 'itapua',
-    name: 'Unidade Itapuã',
-    shortName: 'Itapuã',
-    description: 'Unidade Itapuã da Bruxo Team.',
-    seo: {
-      title: 'Unidade Itapuã — Bruxo Team',
-      description: 'Conheça a unidade Itapuã da Bruxo Team.',
-    },
-    heroImage: '/itapua.jpeg',
-    mapQuery: 'Rua Guararapes 18, Salvador - BA',
-    address: 'Rua Guararapes, 18',
-    city: 'Salvador',
-    state: 'BA',
-    whatsapp: '5571984708998',
-    gallery: [
-      { src: '/itapua.jpeg',     alt: 'Bruxo Team — Itapuã (fachada)' },
-      { src: '/itapua2.jpeg',   alt: 'Bruxo Team — Itapuã (tatame 1)' },
-      { src: '/itapua3.jpeg',   alt: 'Bruxo Team — Itapuã (aula em andamento)' },
-    ],
-    instructors: [
-      {
-        name: 'Flavio Barros',
-        role: 'Mestre',
-        image: '/flavio.jpeg',
-      }
-    ]
+{
+  slug: 'itapua',
+  name: 'Unidade Itapuã',
+  shortName: 'Itapuã',
+  description: 'Unidade Itapuã da Bruxo Team.',
+  seo: {
+    title: 'Unidade Itapuã — Bruxo Team',
+    description: 'Conheça a unidade Itapuã da Bruxo Team.',
   },
+  heroImage: '/itapua.jpeg',
+  mapQuery: 'Rua Guararapes 18, Salvador - BA',
+  address: 'Rua Guararapes, 18',
+  city: 'Salvador',
+  state: 'BA',
+  whatsapp: '5571984708998',
+  gallery: [
+    { src: '/f.jpeg',   alt: 'Bruxo Team — Itapuã (fachada)' },
+    { src: '/f2.jpeg', alt: 'Bruxo Team — Itapuã (tatame 1)' },
+    { src: '/f4.jpeg', alt: 'Bruxo Team — Itapuã (aula em andamento)' },
+  ],
+  instructors: [
+    {
+      name: 'Flavio Barros',
+      role: 'Mestre',
+      image: '/flavio.jpeg',
+    },
+    {
+      name: 'Thiago Bruxo',   // novo mestre
+      role: 'Mestre',
+      image: '/bruxo.jpeg',   // pode trocar por outra foto se quiser
+    },
+  ],
+}
+
 ];
 
 // --------------------------------------
