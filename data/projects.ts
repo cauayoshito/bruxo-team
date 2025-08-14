@@ -43,8 +43,8 @@ export const PROJECTS: Project[] = [
     whatsapp: "5571991843706",
     gallery: [
       { src: "/p2.jpeg",    alt: "Treino no Armindo Biriba" },
-      { src: "/p.jpeg",     alt: "Turma em atividade" },
-      { src: "/stiep2.jpeg", alt: "Registro de grupo do projeto" },
+      { src: "/b1.jpeg",     alt: "Turma em atividade" },
+      { src: "/x.jpeg", alt: "Registro de grupo do projeto" },
     ],
   },
   {
@@ -58,8 +58,8 @@ export const PROJECTS: Project[] = [
     whatsapp: "5571991843706",
     gallery: [
       { src: "/p.jpeg",       alt: "Equipe do projeto social" },
-      { src: "/stella2.jpeg", alt: "Treino coletivo solidário" },
-      { src: "/stella3.jpeg", alt: "Ação beneficente com a comunidade" },
+      { src: "/c2.jpeg", alt: "Treino coletivo solidário" },
+      { src: "/c.jpeg", alt: "Ação beneficente com a comunidade" },
     ],
   },
 ];
