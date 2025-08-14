@@ -12,38 +12,42 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    slug: "Projeto Social Bruxo Team",
+    slug: "projeto-social-alto-do-macaco-itapua",
     name: "Projeto Social",
     location: "Itapuã, Salvador – BA",
     description:
       "Projeto social da Bruxo Team voltado para a comunidade do Alto do Macaco, oferecendo aulas gratuitas de Jiu-Jitsu para crianças e adolescentes.",
     heroImage: "/itapua.jpeg",
     mapQuery: "2a Travessa 17 de Setembro 12, Itapuã, Salvador - BA",
-    whatsapp: "5571991505420", // preencha se quiser
+    whatsapp: "5571991505420",
   },
   {
-    slug: "Projeto Social Bruxo Team",
+    slug: "projeto-social-armindo-biriba",
     name: "Projeto Social",
     location: "Salvador – BA",
     description:
       "Treinos focados em autoconfiança, condicionamento e defesa pessoal em ambiente seguro e acolhedor.",
     heroImage: "/p2.jpeg",
-     mapQuery: "Centro Esportivo Armindo Biriba, rua da ilha, Itapuã, Salvador - BA",
-    whatsapp: "5571991843706", // preencha se quiser
+    mapQuery: "Centro Esportivo Armindo Biriba, Rua da Ilha, Itapuã, Salvador - BA",
+    whatsapp: "5571991843706",
   },
   {
-    slug: "Projeto Social Bruxo Team",
+    slug: "projeto-social-academia-impacto",
     name: "Projeto Social",
     location: "Salvador – BA",
     description:
       "Eventos beneficentes e mutirões para arrecadar alimentos, roupas e brinquedos para famílias em vulnerabilidade.",
     heroImage: "/p.jpeg",
-    mapQuery: "Academia impacto, rua reinado calixto, Itapuã, Salvador - BA",
-    whatsapp: "5571991843706", // preencha se quiser
+    mapQuery: "Academia Impacto, Rua Reinado Calixto, Itapuã, Salvador - BA",
+    whatsapp: "5571991843706",
   },
 ];
 
 export const PROJECTS_INDEX: Record<string, Project> = PROJECTS.reduce(
-  (acc, p) => ((acc[p.slug] = p), acc),
+  (acc, p) => {
+    acc[p.slug] = p;
+    acc[p.slug.toLowerCase()] = p; // tolerante a caixa
+    return acc;
+  },
   {} as Record<string, Project>
 );
