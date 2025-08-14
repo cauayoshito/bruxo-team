@@ -1,6 +1,4 @@
 // data/units.ts
-// Tipos centrais e cadastro das unidades
-
 export type DayKey = 'seg' | 'ter' | 'qua' | 'qui' | 'sex' | 'sab';
 
 export type ClassLabel =
@@ -16,8 +14,7 @@ export type ClassLabel =
 export type ScheduleRow = {
   day: DayKey;
   label: ClassLabel;
-  /** "HH:MM" ou "HH:MM–HH:MM" (aceita -, – ou —) */
-  time: string;
+  time: string; // "HH:MM" ou "HH:MM–HH:MM"
 };
 
 export type UnitSlug = 'matriz' | 'stiep' | 'itapua';
@@ -26,35 +23,28 @@ export type UnitDetail = {
   slug: UnitSlug;
   name: string;
   shortName?: string;
-
-  // Dados públicos/opcionais (preencha quando tiver)
   street?: string;
   district?: string;
   city?: string;
-  uf?: string;          // ex.: "BA"
+  uf?: string;
   zip?: string;
-  whatsapp?: string;    // ex.: "+55 71 9 9999-9999"
-  instagram?: string;   // ex.: "@bruxoteam"
+  whatsapp?: string;
+  instagram?: string;
   mapsUrl?: string;
 };
 
-// Cadastro simples (preencha os campos de endereço/contato depois)
 export const UNITS: Record<UnitSlug, UnitDetail> = {
-  matriz: {
-    slug: 'matriz',
-    name: 'Bruxo Team — Matriz',
-    shortName: 'Matriz',
-    // street: 'Rua ...',
-    // whatsapp: '(71) 9 ....',
-  },
-  stiep: {
-    slug: 'stiep',
-    name: 'Bruxo Team — Stiep',
-    shortName: 'Stiep',
-  },
-  itapua: {
-    slug: 'itapua',
-    name: 'Bruxo Team — Itapuã',
-    shortName: 'Itapuã',
-  },
+  matriz: { slug: 'matriz', name: 'Bruxo Team — Matriz', shortName: 'Matriz' },
+  stiep:  { slug: 'stiep',  name: 'Bruxo Team — Stiep',  shortName: 'Stiep'  },
+  itapua: { slug: 'itapua', name: 'Bruxo Team — Itapuã', shortName: 'Itapuã' },
+};
+
+/** Índice de slugs/aliases -> slug oficial.
+ *  Incluí "stella" como alias apontando para "matriz" (conforme uso antigo).
+ */
+export const UNITS_INDEX: Record<string, UnitSlug> = {
+  matriz: 'matriz',
+  stiep: 'stiep',
+  itapua: 'itapua',
+  stella: 'matriz', // alias legado
 };
