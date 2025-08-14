@@ -1,144 +1,40 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+// app/loja/page.tsx
+import type { Metadata } from "next";
 
-const pedidos = [
-  {
-    data: "6 de julho, 2025",
-    status: "pendente",
-    produtos: [
-      {
-        nome: "Chocolate dark 40%",
-        qtd: 10,
-        img: require("../assets/dark.png"),
-      },
-      {
-        nome: "Chocolate ao leite",
-        qtd: 10,
-        img: require("../assets/milk.png"),
-      },
-      {
-        nome: "Chocolate ao amargo",
-        qtd: 8,
-        img: require("../assets/bitter.png"),
-      },
-    ],
-  },
-  {
-    data: "10 de maio, 2025",
-    status: "finalizado",
-    produtos: [
-      {
-        nome: "Chocolate dark 40%",
-        qtd: 11,
-        img: require("../assets/dark.png"),
-      },
-      {
-        nome: "Chocolate 100% cacau",
-        qtd: 12,
-        img: require("../assets/100.png"),
-      },
-    ],
-  },
+export const metadata: Metadata = {
+  title: "Loja — Bruxo Team",
+  description: "Vitrine de produtos oficiais com compra via WhatsApp.",
+};
+
+const produtos = [
+  { slug: "kimono", name: "Kimono Bruxo Team", price: "R$ 499", desc: "Kimono oficial resistente.", image: "/images/loja/kimono.jpg" },
+  { slug: "rash-guard", name: "Rash Guard", price: "R$ 169", desc: "Performance e proteção.", image: "/images/loja/rash-guard.jpg" },
+  { slug: "camiseta", name: "Camiseta Oficial", price: "R$ 79", desc: "Dia a dia com estilo.", image: "/images/loja/camiseta.jpg" },
 ];
 
-export default function OrdersScreen() {
+export default function LojaPage() {
   return (
-    <ScrollView style={styles.container}>
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-
-      <Text style={styles.title}>Pedidos pendentes</Text>
-
-      {pedidos.map((pedido, index) => (
-        <View key={index} style={styles.card}>
-          <View style={styles.header}>
-            <Text style={styles.date}>{pedido.data}</Text>
-            <Text
-              style={[
-                styles.status,
-                pedido.status === "pendente"
-                  ? styles.statusPendente
-                  : styles.statusFinalizado,
-              ]}
-            >
-              Pedido {pedido.status}
-            </Text>
-          </View>
-
-          {pedido.produtos.map((item, i) => (
-            <View key={i} style={styles.produto}>
-              <Image source={item.img} style={styles.img} />
-              <Text style={styles.nome}>{item.nome}</Text>
-              <Text style={styles.qtd}>QTD: {item.qtd}</Text>
-            </View>
-          ))}
-        </View>
-      ))}
-    </ScrollView>
+    <main className="container py-12">
+      <h1 className="h1 mb-6">Loja</h1>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {produtos.map((p) => (
+          <div key={p.slug} className="card overflow-hidden">
+            <div className="aspect-[4/3] bg-black/10" aria-hidden />
+            <div className="p-4">
+              <h3 className="h3">{p.name}</h3>
+              <p className="p">{p.desc}</p>
+              <div className="flex items-center justify-between mt-3">
+                <span className="font-medium">{p.price}</span>
+                <a className="text-sm underline"
+                   href={`https://wa.me/5571XXXXXXXXX?text=Tenho%20interesse%20em%20${encodeURIComponent(p.name)}`}
+                   target="_blank">
+                  Comprar no WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: "#fff",
-    flex: 1,
-  },
-  logo: {
-    width: 148,
-    height: 132,
-    alignSelf: "center",
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "600",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  card: {
-    backgroundColor: "#f4f4f4",
-    borderRadius: 12,
-    padding: 15,
-    marginBottom: 20,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  date: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  status: {
-    fontWeight: "bold",
-  },
-  statusPendente: {
-    color: "#d35400",
-  },
-  statusFinalizado: {
-    color: "#2980b9",
-  },
-  produto: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 6,
-  },
-  img: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
-    borderRadius: 6,
-    backgroundColor: "#ccc",
-  },
-  nome: {
-    flex: 1,
-    fontSize: 15,
-  },
-  qtd: {
-    fontWeight: "bold",
-  },
-});
