@@ -17,7 +17,7 @@ export type ScheduleRow = {
 export type UnitDetail = {
   slug: 'stiep' | 'itapua' | 'stella';
   name: string;
-  shortName: string;     // "Stiep"
+  shortName: string;     // "Stiep" | "Itapuã" | "Matriz"
   whatsapp: string;      // "557199999999"
   address: string;
   mapQuery: string;      // usado no iframe Google Maps
@@ -30,6 +30,8 @@ export type UnitDetail = {
     title: string;
     description: string;
   };
+  /** marca para aparecer primeiro/estilizado */
+  featured?: boolean;
 };
 
 export const UNITS: UnitDetail[] = [
@@ -37,7 +39,7 @@ export const UNITS: UnitDetail[] = [
     slug: 'stiep',
     name: 'Unidade Stiep',
     shortName: 'Stiep',
-    whatsapp: '5571992813525', // ajuste
+    whatsapp: '5571992813525',
     address: 'Rua Arthur Fraga — Stiep, Salvador/BA',
     mapQuery: 'Rua Arthur Fraga, Stiep, Salvador - BA',
     heroImage: '/stiep.jpeg',
@@ -45,7 +47,7 @@ export const UNITS: UnitDetail[] = [
       'A unidade Stiep reúne treinos de base técnica forte e ritmo constante, ideal para iniciantes e avançados que buscam evolução consistente.',
     instructors: [
       {
-        name: 'Ybere Camargo”',
+        name: 'Ybere Camargo',
         role: 'Head Coach',
         bio:
           'Professor desde 2019 à frente da equipe. Linha técnica, disciplina e formação humana.',
@@ -57,13 +59,8 @@ export const UNITS: UnitDetail[] = [
       { day: 'seg', label: 'Kids', time: '10:00' },
       { day: 'qua', label: 'Mista', time: '12:00' },
       { day: 'sex', label: 'Mista', time: '20:15' },
-      // adicione linhas conforme o quadro
     ],
-    gallery: [
-      '/stiep2.jpeg',
-      '/stiep.jpeg',
-      '/units/stiep/gallery-3.jpg',
-    ],
+    gallery: ['/stiep2.jpeg', '/stiep.jpeg', '/units/stiep/gallery-3.jpg'],
     seo: {
       title: 'Bruxo Team — Unidade Stiep',
       description:
@@ -90,13 +87,9 @@ export const UNITS: UnitDetail[] = [
     schedule: [
       { day: 'ter', label: 'Mista', time: '06:00' },
       { day: 'qua', label: 'Kids', time: '10:00' },
-      // ...
+      // complete com demais horários quando tiver
     ],
-    gallery: [
-      '/itapua2.jpeg',
-      '/itapua.jpeg',
-      '/itapua3.jpeg',
-    ],
+    gallery: ['/itapua2.jpeg', '/itapua.jpeg', '/itapua3.jpeg'],
     seo: {
       title: 'Bruxo Team — Unidade Itapuã (Projeto Social)',
       description:
@@ -104,17 +97,18 @@ export const UNITS: UnitDetail[] = [
     },
   },
   {
-    slug: 'stella',
-    name: 'Unidade Stella',
-    shortName: 'Stella',
-    whatsapp: '5571991843706', // pelo card que você mandou
+    slug: 'stella',                         // mantém o slug para não quebrar links
+    name: 'Unidade Matriz',                 // ← novo nome
+    shortName: 'Matriz',                    // ← novo short
+    featured: true,                         // ← destaque
+    whatsapp: '5571991843706',
     address:
       'Alameda Dilson Jatahy Fonseca, 858 — Stella Maris, Salvador/BA',
     mapQuery:
       'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris, Salvador - BA',
     heroImage: '/stella.jpeg',
     description:
-      'Unidade moderna com treinos para todas as idades. Turmas Kids com metodologia lúdica e segura.',
+      'Unidade Matriz da Bruxo Team, com treinos para todas as idades e metodologia própria. Base técnica forte e formação humana.',
     instructors: [
       {
         name: 'Jean Ribeiro',
@@ -137,15 +131,11 @@ export const UNITS: UnitDetail[] = [
       { day: 'sab', label: 'Open Mat', time: '10:00' },
       { day: 'seg', label: 'Mista', time: '20:15' },
     ],
-    gallery: [
-      '/stella2.jpeg',
-      '/stella.jpeg',
-      '/units/stella/gallery-3.jpg',
-    ],
+    gallery: ['/stella2.jpeg', '/stella.jpeg', '/units/stella/gallery-3.jpg'],
     seo: {
-      title: 'Bruxo Team — Unidade Stella Maris',
+      title: 'Bruxo Team — Unidade Matriz',
       description:
-        'Treinos para todas as idades em Stella Maris. Kids, Mista e Open Mat. Veja horários e fale no WhatsApp.',
+        'Unidade Matriz em Stella Maris. Treinos para todas as idades. Veja horários e fale no WhatsApp.',
     },
   },
 ];
