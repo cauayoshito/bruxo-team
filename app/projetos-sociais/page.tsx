@@ -16,11 +16,15 @@ export default function SocialProjectsPage() {
           cada projeto para ver a grade completa, a localização e como participar.
         </p>
 
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          {PROJECTS.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
-          ))}
-        </div>
+        {PROJECTS.length === 0 ? (
+          <p className="p mt-8 opacity-80">Nenhum projeto cadastrado ainda.</p>
+        ) : (
+          <div className="mt-8 grid md:grid-cols-3 gap-6">
+            {PROJECTS.map((p) => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );
