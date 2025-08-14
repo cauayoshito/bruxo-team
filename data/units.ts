@@ -31,7 +31,7 @@ export type ScheduleRow = {
 // --------------------------------------
 // Tipos de Unidade / Instrutor
 // --------------------------------------
-export type UnitSlug = 'matriz' | 'stiep' | 'itapua';
+export type UnitSlug = 'matriz' | 'stiep' | 'itapua' | 'itacare';
 
 export type Instructor = {
   name: string;
@@ -171,7 +171,32 @@ export const UNITS: UnitDetail[] = [
         image: '/bruxo.jpeg',
       },
     ],
-  }
+  },
+  // ---------- NOVO: Núcleo Itacaré ----------
+  {
+    slug: 'itacare',
+    name: 'Núcleo Itacaré',
+    shortName: 'Itacaré',
+    description: 'Núcleo da Bruxo Team em Itacaré.',
+    seo: {
+      title: 'Núcleo Itacaré — Bruxo Team',
+      description: 'Conheça o Núcleo Itacaré da Bruxo Team.',
+    },
+    heroImage: '/y1.jpeg',
+    mapQuery: 'Ponta do Xaréu, Itacaré - BA',
+    address: 'Ponta do Xaréu - Itacaré',
+    city: 'Itacaré',
+    state: 'BA',
+    whatsapp: '5571988644981',
+    gallery: [
+      { src: '/y1.jpeg',  alt: 'Bruxo Team — Itacaré (fachada)' },
+      { src: '/y2.jpeg', alt: 'Bruxo Team — Itacaré (tatame)' },
+      { src: '/y3.jpeg', alt: 'Bruxo Team — Itacaré (aula em andamento)' },
+    ],
+    instructors: [
+      { name: 'Bruno Andrade', role: 'Professor', image: '/y.jpeg', imagePos: 'center top' },
+    ],
+  },
 ];
 
 // --------------------------------------
