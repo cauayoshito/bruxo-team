@@ -26,13 +26,7 @@ export default function Page() {
           ))}
         </div>
       </section>
-
       <About />
-
-      <Schedule title="Bruxo Team — Matriz" data={scheduleStella} />
-      <div className="mt-12" />
-      <Schedule title="Bruxo Team — Stiep" data={scheduleStiep} />
-
       <Projects />
       <Testimonials />
       <Footer />
