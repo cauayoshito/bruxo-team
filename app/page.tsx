@@ -1,12 +1,11 @@
+// app/page.tsx
 import Hero from "@/components/Hero";
 import UnitCard from "@/components/UnitCard";
-import Schedule from "@/components/Schedule";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { UNITS } from "@/data/units";
-import { scheduleStella, scheduleStiep } from "@/data/schedule";
 
 export default function Page() {
   // Matriz (featured: true) aparece primeiro
@@ -26,8 +25,12 @@ export default function Page() {
           ))}
         </div>
       </section>
+
       <About />
+
+      {/* Projetos Sociais (cards reais, com link para /projetos-sociais/[slug]) */}
       <Projects />
+
       <Testimonials />
       <Footer />
     </main>
