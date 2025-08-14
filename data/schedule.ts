@@ -77,7 +77,6 @@ export const scheduleItapua: GymSchedule = {
 // ---------- MAPA POR UNIDADE ----------
 export const SCHEDULES_BY_UNIT: Record<UnitSlug, GymSchedule> = {
   matriz: scheduleStella, // Matriz usa a grade de Stella
-  stella: scheduleStella,
   stiep: scheduleStiep,
   itapua: scheduleItapua,
 };
