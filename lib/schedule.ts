@@ -5,16 +5,16 @@
 
 import type { DayKey, ClassLabel, ScheduleRow } from "@/data/units";
 
-// Caso não exista ainda em "@/data/schedule", você pode reutilizar estes tipos:
+// Tipos usados aqui e em data/schedule.ts
 export type GymSlot = {
   title: ClassLabel;
-  /** "HH:MM" ou "HH:MM–HH:MM" (aceita hífen normal "-" ou travessão "–" / "—") */
+  /** "HH:MM" ou "HH:MM–HH:MM" (aceita -, – ou —) */
   time: string;
 };
 
 export type GymSchedule = Record<DayKey, GymSlot[]>;
 
-// Ordem e rótulos (usar no sort/labels)
+// Ordem e rótulos
 export const DAY_ORDER: DayKey[] = ["seg", "ter", "qua", "qui", "sex", "sab"];
 export const DAY_LABEL: Record<DayKey, string> = {
   seg: "Seg",
@@ -25,15 +25,11 @@ export const DAY_LABEL: Record<DayKey, string> = {
   sab: "Sáb",
 };
 
-// --------------------------------------
-// Parsing e Normalização de horários
-// --------------------------------------
-
 const RANGE_SEPARATORS = ["–", "—", "-"]; // en-dash, em-dash, hyphen
 
 export type TimeRange = {
-  startMins: number; // minutos desde 00:00
-  endMins: number;   // minutos desde 00:00 (se passar da meia-noite, pode ser > 1440)
+  startMins: number;
+  endMins: number;   // pode ser >1440 se cruzar meia-noite
   durationMins: number;
 };
 
@@ -41,7 +37,6 @@ export function pad2(n: number) {
   return n < 10 ? `0${n}` : `${n}`;
 }
 
-/** "HH:MM" -> minutos desde 00:00. Retorna NaN se inválido. */
 export function parseTimeToMinutes(t: string): number {
   const m = t.trim().match(/^(\d{1,2}):(\d{2})$/);
   if (!m) return NaN;
@@ -51,56 +46,64 @@ export function parseTimeToMinutes(t: string): number {
   return hh * 60 + mm;
 }
 
-/** Converte minutos (0..?) para "HH:MM" no relógio de 24h (>=1440 rola para o dia seguinte) */
 export function minutesToHHMM(mins: number): string {
-  const m = ((mins % 1440) + 1440) % 1440; // normaliza
+  const m = ((mins % 1440) + 1440) % 1440;
   const hh = Math.floor(m / 60);
   const mm = m % 60;
   return `${pad2(hh)}:${pad2(mm)}`;
 }
 
-/** Normaliza uma string de horário em intervalo. Suporta:
- *  - "HH:MM"
- *  - "HH:MM–HH:MM" (ou "-" / "—")
- *  Se end < start, assume que cruza a meia-noite (soma 24h).
- */
 export function normalizeTimeRange(raw: string): TimeRange | null {
   const sep = RANGE_SEPARATORS.find((s) => raw.includes(s));
   if (!sep) {
     const start = parseTimeToMinutes(raw);
     if (Number.isNaN(start)) return null;
-    const end = start + 60; // assume 1h se não tiver fim
-    return {
-      startMins: start,
-      endMins: end,
-      durationMins: end - start,
-    };
+    const end = start + 60; // assume 1h
+    return { startMins: start, endMins: end, durationMins: end - start };
   }
   const [lhs, rhs] = raw.split(sep).map((s) => s.trim());
   const start = parseTimeToMinutes(lhs);
   const endRaw = parseTimeToMinutes(rhs);
   if (Number.isNaN(start) || Number.isNaN(endRaw)) return null;
   const end = endRaw < start ? endRaw + 24 * 60 : endRaw;
-  return {
-    startMins: start,
-    endMins: end,
-    durationMins: end - start,
-  };
+  return { startMins: start, endMins: end, durationMins: end - start };
 }
 
-/** Retorna uma versão “bonita” com travessão sempre "–" */
 export function prettyTimeRange(raw: string): string {
   const r = normalizeTimeRange(raw);
   if (!r) return raw.trim();
-  const start = minutesToHHMM(r.startMins);
-  const end = minutesToHHMM(r.endMins);
-  return `${start}–${end}`;
+  return `${minutesToHHMM(r.startMins)}–${minutesToHHMM(r.endMins)}`;
 }
 
-// --------------------------------------
-// Validação e limpeza
-// --------------------------------------
+/** 👇 Compatível com o que o app importa */
+export function normalizeTime(raw: string): string {
+  return prettyTimeRange(raw);
+}
 
+/** Mapeia rótulos soltos para os nomes oficiais do tipo ClassLabel */
+const LABEL_MAP: Array<[RegExp, ClassLabel]> = [
+  [/^(jiu.?jitsu).*kimono|com\s*kimono/i, "Jiu-Jitsu (com kimono)"],
+  [/^jiu.?jitsu/i, "Jiu-Jitsu (com kimono)"],
+  [/no[\s-]*gi|sem\s*kimono/i, "No-Gi (sem kimono)"],
+  [/feminin/i, "Feminino"],
+  [/kids?|infantil/i, "Kids"],
+  [/mista|all\s*levels?|geral/i, "Mista"],
+  [/competi|equipa? de desempenho/i, "Competição"],
+  [/60\+|melhor idade|sênior/i, "60+"],
+  [/open\s*mat/i, "Open Mat"],
+];
+
+/** 👇 Compatível com o que o app importa */
+export function normalizeLabel(raw: string): ClassLabel {
+  const s = (raw || "").trim();
+  for (const [re, label] of LABEL_MAP) {
+    if (re.test(s)) return label;
+  }
+  // fallback seguro
+  return "Mista";
+}
+
+// ---------- validação / transformação ----------
 export type RowWithMeta = ScheduleRow & TimeRange;
 
 export function isValidRow(row: ScheduleRow): boolean {
@@ -109,7 +112,6 @@ export function isValidRow(row: ScheduleRow): boolean {
   return normalizeTimeRange(row.time) !== null;
 }
 
-/** Converte GymSchedule -> ScheduleRow[] (padronizado) */
 export function toRows(schedule: GymSchedule): ScheduleRow[] {
   const days = Object.keys(schedule) as DayKey[];
   const rows: ScheduleRow[] = [];
@@ -125,7 +127,6 @@ export function toRows(schedule: GymSchedule): ScheduleRow[] {
   return rows;
 }
 
-/** Enriquecido com start/end/duração (útil para sort/consulta) */
 export function materialize(rows: ScheduleRow[]): RowWithMeta[] {
   return rows
     .map((r) => {
@@ -136,7 +137,6 @@ export function materialize(rows: ScheduleRow[]): RowWithMeta[] {
     .filter(Boolean) as RowWithMeta[];
 }
 
-/** Ordena por dia e horário de início */
 export function sortRows(rows: ScheduleRow[]): ScheduleRow[] {
   const enriched = materialize(rows).sort((a, b) => {
     const d = DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day);
@@ -146,16 +146,12 @@ export function sortRows(rows: ScheduleRow[]): ScheduleRow[] {
   return enriched.map(({ startMins: _a, endMins: _b, durationMins: _c, ...rest }) => rest);
 }
 
-/** Agrupa por dia já ordenado por horário */
 export function groupByDay(rows: ScheduleRow[]): Record<DayKey, ScheduleRow[]> {
   const out = Object.fromEntries(DAY_ORDER.map((d) => [d, []])) as Record<DayKey, ScheduleRow[]>;
-  for (const r of sortRows(rows)) {
-    out[r.day].push(r);
-  }
+  for (const r of sortRows(rows)) out[r.day].push(r);
   return out;
 }
 
-/** Junta dois quadros (concatena e ordena) */
 export function mergeSchedules(a: GymSchedule, b: GymSchedule): GymSchedule {
   const merged: GymSchedule = { seg: [], ter: [], qua: [], qui: [], sex: [], sab: [] };
   for (const day of DAY_ORDER) {
@@ -168,7 +164,6 @@ export function mergeSchedules(a: GymSchedule, b: GymSchedule): GymSchedule {
   return merged;
 }
 
-/** Retorna erros de validação amigáveis (para debug em dev) */
 export function validateSchedule(schedule: GymSchedule): string[] {
   const errors: string[] = [];
   for (const day of DAY_ORDER) {
@@ -182,36 +177,27 @@ export function validateSchedule(schedule: GymSchedule): string[] {
   return errors;
 }
 
-// --------------------------------------
-// Consultas de “próximas aulas”
-// --------------------------------------
-
-export type NextClass = RowWithMeta & { dayIndex: number; /** minutos a partir de "agora" */ startsInMins: number };
+// ---------- próximas aulas ----------
+export type NextClass = RowWithMeta & { dayIndex: number; startsInMins: number };
 
 function nowInMinutes(localNow: Date = new Date()): { dayIndex: number; mins: number } {
-  const day = (localNow.getDay() + 6) % 7; // 0=Seg, 5=Sáb (Date: 0=Dom)
-  const dayIndex = day as number;
+  const day = (localNow.getDay() + 6) % 7; // 0=Seg
   const mins = localNow.getHours() * 60 + localNow.getMinutes();
-  return { dayIndex, mins };
+  return { dayIndex: day, mins };
 }
 
-/** Lista as próximas N aulas a partir de "agora" (considera hoje e próximos dias) */
 export function getNextClasses(schedule: GymSchedule, count = 3, localNow: Date = new Date()): NextClass[] {
   const rows = materialize(toRows(schedule));
   const { dayIndex: todayIdx, mins: nowMins } = nowInMinutes(localNow);
 
-  // Gera uma timeline de 7 dias a partir de hoje
   const timeline: NextClass[] = [];
   for (let offset = 0; offset < 7; offset++) {
     const idx = (todayIdx + offset) % DAY_ORDER.length;
     const day = DAY_ORDER[idx];
     const dayRows = rows.filter((r) => r.day === day);
-
     for (const r of dayRows) {
-      // Se for hoje, só aulas que ainda não começaram
       const startsToday = offset === 0 ? r.startMins > nowMins : true;
       if (!startsToday) continue;
-
       const startsIn = offset * 1440 + (r.startMins - (offset === 0 ? nowMins : 0));
       timeline.push({ ...r, dayIndex: idx, startsInMins: startsIn });
     }
@@ -220,21 +206,14 @@ export function getNextClasses(schedule: GymSchedule, count = 3, localNow: Date 
   return timeline.sort((a, b) => a.startsInMins - b.startsInMins).slice(0, count);
 }
 
-/** Filtra por tipo de aula (label) */
 export function filterByLabel(rows: ScheduleRow[], label: ClassLabel): ScheduleRow[] {
   return rows.filter((r) => r.label === label);
 }
 
-/** Converte GymSchedule -> tabela já ordenada (para UI) */
 export function toOrderedTable(schedule: GymSchedule): Record<DayKey, ScheduleRow[]> {
   return groupByDay(toRows(schedule));
 }
 
-// --------------------------------------
-// Helpers de formatação
-// --------------------------------------
-
-/** Ex.: "Seg • 18:30–19:30 • No-Gi (sem kimono)" */
 export function formatRowHuman(row: ScheduleRow): string {
   return `${DAY_LABEL[row.day]} • ${prettyTimeRange(row.time)} • ${row.label}`;
 }
