@@ -53,7 +53,7 @@ export default function Page() {
       <section className="container py-10">
         <h2 className="h2">Nosso time em ação</h2>
         <p className="p mt-2 opacity-80">
-          Arrasta pro lado ou passa o mouse pra pausar — no mobile, deslize.
+          Arrasta pro lado ou passa o mouse pra pausar no mobile, deslize.
         </p>
         <div className="mt-6">
           <CompetitorsMarquee images={IMAGES} height={220} speed={45} />
@@ -65,3 +65,4 @@ export default function Page() {
     </main>
   );
 }
+
