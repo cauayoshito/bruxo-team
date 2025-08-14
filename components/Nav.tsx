@@ -1,67 +1,92 @@
+// components/Nav.tsx
 "use client";
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import { Menu } from "lucide-react";
 
-const items = [
+import Link from "next/link";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+type HomeItem = { id: "unidades" | "horarios" | "contato"; label: string };
+type PageItem = { href: string; label: string };
+
+const itemsHome: HomeItem[] = [
   { id: "unidades", label: "Unidades" },
   { id: "horarios", label: "Horários" },
-  { id: "projetos", label: "Projetos Sociais" },
   { id: "contato",  label: "Contato" },
 ];
+
+const itemsPages: PageItem[] = [
+  { href: "/competicao",         label: "Competição" },
+  { href: "/loja",               label: "Loja" },
+  { href: "/projetos-sociais",   label: "Projetos Sociais" },
+];
+
+const toHomeHash = (id: HomeItem["id"]) =>
+  ({ pathname: "/", hash: id } as const);
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
 
-  // Usamos sempre UrlObject para satisfazer o typedRoutes
-  const toHomeHash = (id: string) => ({ pathname: "/", hash: id } as const);
+  const close = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-background/80 border-b border-white/5">
-      <div className="container mx-auto h-16 px-4 flex items-center justify-between">
-        <Link href={{ pathname: "/" }} className="flex items-center gap-3" prefetch={false}>
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white">
-            <Image src="/logo-bruxo.png" alt="Bruxo Team" width={26} height={26} priority />
-          </span>
-          <span className="font-extrabold tracking-wide">BRUXO TEAM</span>
+    <nav className="w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex items-center justify-between py-3">
+        {/* Logo / nome do site */}
+        <Link href="/" className="font-semibold text-lg">
+          Bruxo Team
         </Link>
 
-        {/* menu desktop */}
-        <nav className="hidden md:flex items-center gap-6">
-          {items.map((it) => (
-            <Link
-              key={it.id}
-              href={toHomeHash(it.id)}
-              prefetch={false}
-              className="text-sm text-white/80 hover:text-white"
-            >
+        {/* Desktop */}
+        <div className="hidden md:flex items-center gap-2">
+          {/* Anchors da home */}
+          {itemsHome.map((it) => (
+            <Link key={it.id} href={toHomeHash(it.id)} className="px-3 py-2 hover:underline">
               {it.label}
             </Link>
           ))}
-        </nav>
 
-        {/* botão mobile */}
+          {/* Páginas */}
+          {itemsPages.map((it) => (
+            <Link key={it.href} href={it.href} className="px-3 py-2 hover:underline">
+              {it.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Botão mobile */}
         <button
-          className="md:hidden p-2 rounded-md border border-white/10"
-          onClick={() => setOpen((v) => !v)}
+          className="md:hidden inline-flex items-center justify-center p-2 rounded-lg border"
           aria-label="Abrir menu"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
         >
-          <Menu className="w-5 h-5" />
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
-      {/* menu mobile */}
+      {/* Drawer mobile */}
       {open && (
-        <div className="md:hidden border-t border-white/10 bg-background/95">
-          <div className="container mx-auto px-4 py-3 flex flex-col gap-3">
-            {items.map((it) => (
+        <div className="md:hidden border-t">
+          <div className="container py-2 flex flex-col">
+            {/* Anchors da home */}
+            {itemsHome.map((it) => (
               <Link
                 key={it.id}
                 href={toHomeHash(it.id)}
-                prefetch={false}
-                className="text-sm"
-                onClick={() => setOpen(false)}
+                className="px-2 py-3 hover:bg-white/5 rounded-lg"
+                onClick={close}
+              >
+                {it.label}
+              </Link>
+            ))}
+
+            {/* Páginas */}
+            {itemsPages.map((it) => (
+              <Link
+                key={it.href}
+                href={it.href}
+                className="px-2 py-3 hover:bg-white/5 rounded-lg"
+                onClick={close}
               >
                 {it.label}
               </Link>
@@ -69,6 +94,6 @@ export default function Nav() {
           </div>
         </div>
       )}
-    </header>
+    </nav>
   );
 }
