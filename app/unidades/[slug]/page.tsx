@@ -30,8 +30,7 @@ export function generateMetadata({ params }: Props): Metadata {
     return { title: "Bruxo Team", description: "Unidade não encontrada." };
   }
 
-  const title =
-    unit.seo?.title ?? `${unit.name} — Bruxo Team`;
+  const title = unit.seo?.title ?? `${unit.name} — Bruxo Team`;
   const description =
     unit.seo?.description ?? `Página da ${unit.name}.`;
   const images = unit.heroImage ? [unit.heroImage] : [];
@@ -57,16 +56,46 @@ export default function UnitPage({ params }: Props) {
       {/* Hero / capa da unidade */}
       <UnitHeader unit={unit} />
 
+      {/* Contatos (WhatsApp / Instagram) */}
+      {(unit.whatsapp || unit.instagram) && (
+        <section className="container pt-6">
+          <div className="flex flex-wrap gap-3">
+            {unit.whatsapp && (
+              <a
+                className="btn-primary"
+                href={`https://wa.me/${unit.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
+                  `Olá! Quero informações sobre a unidade ${unit.name}.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Falar no WhatsApp
+              </a>
+            )}
+            {unit.instagram && (
+              <a
+                className="btn-secondary"
+                href={unit.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* Instrutores responsáveis */}
       <UnitInstructors unit={unit} />
 
-      {/* Horários (puxa de SCHEDULES_BY_UNIT via UnitSchedule) */}
+      {/* Horários */}
       <UnitSchedule unit={unit} />
 
-      {/* Galeria da unidade */}
+      {/* Galeria */}
       <UnitGallery unit={unit} />
 
-      {/* Endereço e mapa (renderiza só se tiver info) */}
+      {/* Endereço e mapa */}
       {(unit.address || unit.mapQuery) && (
         <section className="container py-12">
           <h2 className="h2">Endereço</h2>
@@ -77,7 +106,9 @@ export default function UnitPage({ params }: Props) {
                 className="w-full h-64 rounded-xl border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps?q=${encodeURIComponent(unit.mapQuery)}&output=embed`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(
+                  unit.mapQuery
+                )}&output=embed`}
               />
             </div>
           )}
