@@ -1,42 +1,40 @@
-// components/ProjectCard.tsx
 "use client";
 
 import Link from "next/link";
 import { Instagram } from "lucide-react";
 
 export type Project = {
+  slug: string;            // usado para linkar a página interna
   name: string;
-  subtitle?: string;        // ex.: "Itapuã, Salvador – BA"
-  description?: string;     // opcional
-  image?: string;           // /images/...
-  whatsapp?: string;        // "5571..."
-  instagram?: string;       // "https://instagram.com/..."
+  subtitle?: string;
+  description?: string;
+  image?: string;
+  whatsapp?: string;
+  instagram?: string;
 };
 
 export default function ProjectCard({ project }: { project: Project }) {
+  const href = `/projetos-sociais/${project.slug}`;
+
   return (
     <div className="rounded-2xl bg-neutral-900 p-5 shadow-lg flex flex-col">
-      {/* Imagem */}
-      {project.image && (
-        <div className="overflow-hidden rounded-xl mb-4">
-          <img
-            src={project.image}
-            alt={project.name}
-            className="w-full h-48 object-cover"
-          />
-        </div>
-      )}
+      {/* BLOCO CLICÁVEL */}
+      <Link href={href} className="group block">
+        {project.image && (
+          <div className="overflow-hidden rounded-xl mb-4">
+            <img
+              src={project.image}
+              alt={project.name}
+              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </div>
+        )}
+        <h3 className="text-lg font-bold group-hover:underline">{project.name}</h3>
+        {project.subtitle && <p className="text-sm text-white/70">{project.subtitle}</p>}
+        {project.description && <p className="text-sm text-white/70 mt-1">{project.description}</p>}
+      </Link>
 
-      {/* Título / Sub */}
-      <h3 className="text-lg font-bold">{project.name}</h3>
-      {project.subtitle && (
-        <p className="text-sm text-white/70">{project.subtitle}</p>
-      )}
-      {project.description && (
-        <p className="text-sm text-white/70 mt-1">{project.description}</p>
-      )}
-
-      {/* Ações (igual UnitCard) */}
+      {/* AÇÕES */}
       <div className="mt-4 flex items-center justify-between">
         {project.whatsapp && (
           <Link
