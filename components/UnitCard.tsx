@@ -33,7 +33,7 @@ export default function UnitCard({ unit }: { unit: UnitDetail }) {
             href={`https://wa.me/${unit.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-green-600 hover:bg-green-700 transition"
+            className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-green-600 hover:bg-red-700 transition"
           >
             WhatsApp
           </Link>
