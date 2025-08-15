@@ -29,25 +29,30 @@ export function generateMetadata({ params }: Props): Metadata {
   }
 
   const title = project.seo?.title ?? `${project.name} — Bruxo Team`;
-  const description =
-    project.seo?.description ?? `Página do projeto ${project.name}.`;
+  const description = project.seo?.description ?? `Página do projeto ${project.name}.`;
   const images = project.heroImage ? [project.heroImage] : [];
 
   return {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      images,
-      type: "website",
-    },
+    openGraph: { title, description, images, type: "website" },
   };
 }
 
 export default function ProjectPage({ params }: Props) {
   const project: ProjectDetail | undefined = PROJECTS_INDEX[params.slug];
   if (!project) return notFound();
+
+  const whatsappLink = project.whatsapp
+    ? `https://wa.me/${project.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
+        `Olá! Quero informações sobre o projeto ${project.name}.`
+      )}`
+    : null;
+
+  const mapsLink =
+    project.mapQuery && project.mapQuery.trim()
+      ? `https://www.google.com/maps?q=${encodeURIComponent(project.mapQuery)}`
+      : null;
 
   return (
     <main>
@@ -58,12 +63,10 @@ export default function ProjectPage({ params }: Props) {
       {(project.whatsapp || project.instagram) && (
         <section className="container pt-6">
           <div className="flex flex-wrap gap-3">
-            {project.whatsapp && (
+            {whatsappLink && (
               <a
                 className="btn-primary"
-                href={`https://wa.me/${project.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
-                  `Olá! Quero informações sobre o projeto ${project.name}.`
-                )}`}
+                href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -85,22 +88,20 @@ export default function ProjectPage({ params }: Props) {
       )}
 
       {/* Galeria do projeto */}
-      <ProjectGallery project={project} />
+      <ProjectGallery images={project.gallery ?? []} />
 
       {/* Endereço e mapa */}
       {(project.address || project.mapQuery) && (
         <section className="container py-12">
           <h2 className="h2">Endereço</h2>
           {project.address && <p className="p mt-2">{project.address}</p>}
-          {project.mapQuery && (
+          {mapsLink && (
             <div className="mt-4">
               <iframe
                 className="w-full h-64 rounded-xl border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps?q=${encodeURIComponent(
-                  project.mapQuery
-                )}&output=embed`}
+                src={`${mapsLink}&output=embed`}
               />
             </div>
           )}
