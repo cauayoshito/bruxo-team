@@ -37,7 +37,7 @@ export type Instructor = {
   image?: string;     // /images/...
   bio?: string;
   instagram?: string; // @usuario
-  imagePos?: string;  // CSS object-position (ex.: 'center top', '50% 15%')
+  imagePos?: string;  // CSS object-position
 };
 
 export type UnitDetail = {
@@ -51,7 +51,7 @@ export type UnitDetail = {
   state?: string;
   phone?: string;
   whatsapp?: string;
-  /** URL do Instagram da unidade (ex.: https://instagram.com/bruxoteam) */
+  /** URL do Instagram da unidade */
   instagram?: string;
 
   // Texto/SEO (opcionais)
@@ -92,7 +92,7 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571991843706',
-    instagram: 'https://instagram.com/', // preencha o link real
+    instagram: 'https://instagram.com/bruxoteam_matriz',
     gallery: [
       { src: '/bx2.jpg', alt: 'Bruxo Team — Matriz (fachada)' },
       { src: '/bx3.jpg', alt: 'Bruxo Team — Matriz (tatame 1)' },
@@ -118,7 +118,7 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571992813525',
-    instagram: 'https://instagram.com/',
+    instagram: 'https://instagram.com/bruxoteam_stiep',
     gallery: [
       { src: '/stiep.jpeg', alt: 'Bruxo Team — Stiep (fachada)' },
       { src: '/stiep2.jpeg', alt: 'Bruxo Team — Stiep (tatame 1)' },
@@ -143,7 +143,7 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571984708998',
-    instagram: 'https://instagram.com/',
+    instagram: 'https://instagram.com/bruxoteam_itapua',
     gallery: [
       { src: '/f.jpeg', alt: 'Bruxo Team — Itapuã (fachada)' },
       { src: '/f2.jpeg', alt: 'Bruxo Team — Itapuã (tatame 1)' },
@@ -169,7 +169,7 @@ export const UNITS: UnitDetail[] = [
     city: 'Itacaré',
     state: 'BA',
     whatsapp: '5571988644981',
-    instagram: 'https://instagram.com/',
+    instagram: 'https://instagram.com/bruxoteamitacare',
     gallery: [
       { src: '/y1.jpeg', alt: 'Bruxo Team — Itacaré (fachada)' },
       { src: '/y2.jpeg', alt: 'Bruxo Team — Itacaré (tatame)' },
