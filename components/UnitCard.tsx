@@ -27,13 +27,13 @@ export default function UnitCard({ unit }: { unit: UnitDetail }) {
 
       {/* Botões */}
       <div className="mt-4 flex items-center justify-between">
-        {/* WhatsApp */}
+        {/* WhatsApp (agora vermelho) */}
         {unit.whatsapp && (
           <Link
             href={`https://wa.me/${unit.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-green-600 hover:bg-red-700 transition"
+            className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-red-600 hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500/60"
           >
             WhatsApp
           </Link>
@@ -46,7 +46,7 @@ export default function UnitCard({ unit }: { unit: UnitDetail }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Instagram da ${unit.name}`}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 hover:border-white/30 hover:bg-white/5 transition"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 hover:border-white/30 hover:bg-white/5 transition focus:outline-none focus:ring-2 focus:ring-white/20"
             title="Instagram"
           >
             <Instagram className="h-5 w-5" />
