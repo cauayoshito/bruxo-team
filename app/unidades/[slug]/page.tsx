@@ -15,37 +15,21 @@ import UnitGallery from "@/components/UnitGallery";
 
 type Props = { params: { slug: UnitSlug } };
 
-// (opcional) evita gerar rotas dinâmicas fora da lista
 export const dynamicParams = false;
 
-// Gera as rotas estáticas com base nas unidades
 export function generateStaticParams() {
   return UNITS.map((u) => ({ slug: u.slug }));
 }
 
-// SEO por unidade
 export function generateMetadata({ params }: Props): Metadata {
   const unit = UNITS_INDEX[params.slug];
   if (!unit) {
     return { title: "Bruxo Team", description: "Unidade não encontrada." };
   }
-
-  const title =
-    unit.seo?.title ?? `${unit.name} — Bruxo Team`;
-  const description =
-    unit.seo?.description ?? `Página da ${unit.name}.`;
+  const title = unit.seo?.title ?? `${unit.name} — Bruxo Team`;
+  const description = unit.seo?.description ?? `Página da ${unit.name}.`;
   const images = unit.heroImage ? [unit.heroImage] : [];
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images,
-      type: "website",
-    },
-  };
+  return { title, description, openGraph: { title, description, images, type: "website" } };
 }
 
 export default function UnitPage({ params }: Props) {
@@ -54,19 +38,41 @@ export default function UnitPage({ params }: Props) {
 
   return (
     <main>
-      {/* Hero / capa da unidade */}
       <UnitHeader unit={unit} />
 
-      {/* Instrutores responsáveis */}
+      {(unit.whatsapp || unit.instagram) && (
+        <section className="container pt-6">
+          <div className="flex flex-wrap gap-3">
+            {unit.whatsapp && (
+              <a
+                className="btn-primary"
+                href={`https://wa.me/${unit.whatsapp}?text=${encodeURIComponent(
+                  `Olá! Quero informações sobre a unidade ${unit.name}.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Falar no WhatsApp
+              </a>
+            )}
+            {unit.instagram && (
+              <a
+                className="btn-secondary"
+                href={unit.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            )}
+          </div>
+        </section>
+      )}
+
       <UnitInstructors unit={unit} />
-
-      {/* Horários (puxa de SCHEDULES_BY_UNIT via UnitSchedule) */}
       <UnitSchedule unit={unit} />
-
-      {/* Galeria da unidade */}
       <UnitGallery unit={unit} />
 
-      {/* Endereço e mapa (renderiza só se tiver info) */}
       {(unit.address || unit.mapQuery) && (
         <section className="container py-12">
           <h2 className="h2">Endereço</h2>
