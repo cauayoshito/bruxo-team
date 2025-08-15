@@ -1,100 +1,51 @@
 // components/Hero.tsx
-"use client";
-
-import { useMemo, useState } from "react";
-import Link from "next/link";
-import { UNITS } from "@/data/units";
-import { waLink } from "@/lib/whatsapp";
-
 export default function Hero() {
-  // destaca a matriz se houver featured; senão a primeira
-  const defaultUnit = useMemo(() => {
-    const featured = UNITS.find(u => u.featured);
-    return featured ?? UNITS[0];
-  }, []);
-  const [unitSlug, setUnitSlug] = useState(defaultUnit.slug);
-  const unit = useMemo(() => UNITS.find(u => u.slug === unitSlug) ?? defaultUnit, [unitSlug, defaultUnit]);
-
-  // WhatsApp pronto + fallback
-  const wa = unit.whatsapp ?? "5571991843706";
-  const msg = `Olá! Quero fazer uma aula experimental na ${unit.name}.`;
-  const waUrl = waLink(wa, msg);
-
-  const mapUrl = unit.mapQuery
-    ? `https://www.google.com/maps?q=${encodeURIComponent(unit.mapQuery)}`
-    : undefined;
-
   return (
-    <section className="container py-16 section">
-      {/* chips de prova social */}
-      <div className="flex flex-wrap gap-2 text-xs mb-3">
-        <span className="px-2 py-1 rounded-full bg-white/5 border">Desde 2019</span>
-        <span className="px-2 py-1 rounded-full bg-white/5 border">+3 unidades</span>
-        <span className="px-2 py-1 rounded-full bg-white/5 border">+20 atletas competindo</span>
-        <span className="px-2 py-1 rounded-full bg-white/5 border">Ambiente família</span>
-      </div>
+    <section className="relative bg-neutral-950">
+      <div className="container mx-auto px-4 md:px-6 py-14 md:py-20 lg:py-28">
+        <div className="max-w-screen-md">
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2 mb-5 md:mb-6">
+            <span className="px-2.5 py-1 text-xs rounded-full bg-white/5 border border-white/10">Desde 2012</span>
+            <span className="px-2.5 py-1 text-xs rounded-full bg-white/5 border border-white/10">+270 atletas competindo</span>
+            <span className="px-2.5 py-1 text-xs rounded-full bg-white/5 border border-white/10">Primeira aula grátis</span>
+          </div>
 
-      <h1 className="h1">
-        Força, Técnica e União — <br className="hidden md:block" />
-        Bruxo Team
-      </h1>
+          {/* Título */}
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-balance">
+            Força, Técnica e União — Bruxo Team
+          </h1>
 
-      <p className="p mt-4 max-w-2xl">
-        Jiu-Jitsu para <strong>iniciantes, Kids e competidores</strong> em Salvador.
-        Treinos pela manhã, tarde e noite em <strong>Bruxo Team Matriz</strong>, <strong>Stiep</strong> e <strong>Itapuã</strong>.
-        <span className="ml-1 font-semibold">Primeira aula gratuita.</span>
-      </p>
+          {/* Sub */}
+          <p className="mt-3 md:mt-4 text-sm md:text-base text-white/80 leading-relaxed">
+            Jiu-jitsu para iniciantes e competidores em Salvador. Treine pela manhã, tarde ou noite na Bruxo Team
+            <span className="hidden sm:inline"> — Matriz (Stella Maris), Stiep e Itapuã.</span>
+          </p>
 
-      {/* seletor de unidade + CTAs */}
-      <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-end">
-        <label className="text-sm opacity-80">
-          Escolher unidade
-          <select
-            className="mt-1 ml-0 sm:ml-2 px-3 py-2 rounded-lg bg-white/5 border"
-            value={unitSlug}
-            onChange={(e) => setUnitSlug(e.target.value as typeof unitSlug)}
-          >
-            {UNITS.map(u => (
-              <option key={u.slug} value={u.slug}>
-                {u.shortName ?? u.name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div className="flex flex-wrap gap-3">
-          <a
-            className="btn-primary"
-            href={waUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Agendar aula experimental
-          </a>
-
-          <Link href="/#horarios" className="btn-secondary">
-            Ver horários
-          </Link>
-
-          {mapUrl && (
+          {/* Ações */}
+          <div className="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
-              className="btn-secondary"
-              href={mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#unidades"
+              className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-red-600 hover:bg-red-700 transition"
             >
-              Ver no mapa
+              Agendar aula experimental
             </a>
-          )}
+            <a
+              href="#horarios"
+              className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border border-white/15 hover:border-white/30 hover:bg-white/5 transition"
+            >
+              Ver horários
+            </a>
+          </div>
+
+          {/* Lista de features */}
+          <ul className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-white/70">
+            <li className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Aulas para iniciantes e retorno</li>
+            <li className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Kids, Feminino, Mista e Competição</li>
+            <li className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">Matriz, Stiep e Itapuã</li>
+          </ul>
         </div>
       </div>
-
-      {/* bullets curtas de benefícios */}
-      <ul className="mt-6 grid md:grid-cols-3 gap-3 text-sm opacity-90">
-        <li className="card p-3">✔️ Aulas para iniciantes e retornantes</li>
-        <li className="card p-3">✔️ Kids, Feminino, Mista e Competição</li>
-        <li className="card p-3">✔️ 1ª aula grátis + suporte no WhatsApp</li>
-      </ul>
     </section>
   );
 }
