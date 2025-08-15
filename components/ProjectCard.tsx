@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Instagram } from "lucide-react";
 
 export type Project = {
-  slug: string;            // usado para linkar a página interna
+  slug: string;
   name: string;
   subtitle?: string;
   description?: string;
@@ -14,7 +14,11 @@ export type Project = {
 };
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const href = `/projetos-sociais/${project.slug}`;
+  // Usa UrlObject por causa do typedRoutes
+  const href = {
+    pathname: "/projetos-sociais/[slug]" as const,
+    query: { slug: project.slug },
+  };
 
   return (
     <div className="rounded-2xl bg-neutral-900 p-5 shadow-lg flex flex-col">
@@ -38,7 +42,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       <div className="mt-4 flex items-center justify-between">
         {project.whatsapp && (
           <Link
-            href={`https://wa.me/${project.whatsapp}`}
+            href={`https://wa.me/${String(project.whatsapp).replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-red-600 hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500/60"
