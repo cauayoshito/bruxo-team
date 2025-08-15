@@ -73,7 +73,7 @@ export default function About() {
         <div className="md:col-span-7">
           <h2 className="h2">Quem somos</h2>
           <p className="p mt-4">
-            <strong>Fundada em 2019 pelo professor Tiago “Bruxo”, a Bruxo Team
+            <strong>Fundada em 2019 pelo professor Tiago Ferreira "Bruxo", a Bruxo Team
             Jiu-Jitsu nasceu do sonho de construir mais do que uma academia:
             uma verdadeira família dentro das artes marciais.</strong> Com uma
             trajetória que começou em 1995, Tiago mergulhou no universo do
