@@ -85,16 +85,16 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Matriz — Bruxo Team',
       description: 'Conheça a unidade Matriz da Bruxo Team.',
     },
-    heroImage: '/stella.jpeg',
+    heroImage: '/bx3.jpg',
     mapQuery: 'Unidade Matriz Bruxo Team, Alameda Dilson Jatahy Fonseca 858 - Stella Maris, Salvador - BA',
     address: 'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris',
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571991843706',
     gallery: [
-      { src: '/stella.jpeg',     alt: 'Bruxo Team — Matriz (fachada)' },
-      { src: '/stella2.jpeg',   alt: 'Bruxo Team — Matriz (tatame 1)' },
-      { src: '/stella3.jpeg',   alt: 'Bruxo Team — Matriz (aula em andamento)' },
+      { src: '/bx.jpg',     alt: 'Bruxo Team — Matriz (fachada)' },
+      { src: '/bx2.jpeg',   alt: 'Bruxo Team — Matriz (tatame 1)' },
+      { src: '/bx4.jpeg',   alt: 'Bruxo Team — Matriz (aula em andamento)' },
     ],
     instructors: [
       {
