@@ -15,9 +15,10 @@ export default function Page({ params }: { params: { slug: string } }) {
       )}`
     : null;
 
-  const mapsLink = project.mapQuery
-    ? `https://www.google.com/maps?q=${encodeURIComponent(project.mapQuery)}`
-    : null;
+  const mapsLink =
+    "mapQuery" in project && project.mapQuery
+      ? `https://www.google.com/maps?q=${encodeURIComponent(project.mapQuery)}`
+      : null;
 
   return (
     <main>
@@ -45,10 +46,12 @@ export default function Page({ params }: { params: { slug: string } }) {
         <div className="md:col-span-7">
           <h1 className="h1">{project.name}</h1>
           <p className="p mt-3">{project.description}</p>
-          {project.address && <p className="p mt-2 opacity-80">{project.address}</p>}
+          {project.address && (
+            <p className="p mt-2 opacity-80">{project.address}</p>
+          )}
 
           <div className="mt-6 flex gap-3">
-            {whatsappLink ? (
+            {whatsappLink && (
               <a
                 className="btn-primary"
                 href={whatsappLink}
@@ -57,9 +60,9 @@ export default function Page({ params }: { params: { slug: string } }) {
               >
                 Falar no WhatsApp
               </a>
-            ) : null}
+            )}
 
-            {mapsLink ? (
+            {mapsLink && (
               <a
                 className="btn-secondary"
                 href={mapsLink}
@@ -68,7 +71,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               >
                 Ver no mapa
               </a>
-            ) : null}
+            )}
           </div>
         </div>
       </section>
@@ -82,7 +85,10 @@ export default function Page({ params }: { params: { slug: string } }) {
           <h2 className="h2">Galeria</h2>
           <div className="mt-6 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             {project.gallery.map((g, idx) => (
-              <div key={g.src + idx} className="relative w-full overflow-hidden rounded-xl aspect-[4/3]">
+              <div
+                key={g.src + idx}
+                className="relative w-full overflow-hidden rounded-xl aspect-[4/3]"
+              >
                 <Image
                   src={g.src}
                   alt={g.alt || `Imagem ${idx + 1} do ${project.name}`}
