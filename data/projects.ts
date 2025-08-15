@@ -1,66 +1,32 @@
-"use client";
+import type { Project } from "@/components/ProjectCard";
 
-import Link from "next/link";
-import { Instagram } from "lucide-react";
+// números de WhatsApp
+const WHATSAPP_MATRIZ = "5571991843706"; // matriz + rua da ilha + nova brasília
+const WHATSAPP_ALTO_DO_MACACO = "5571991505420"; // alto do macaco
 
-export type Project = {
-  slug: string;            // <-- precisa do slug pra linkar
-  name: string;
-  subtitle?: string;
-  description?: string;
-  image?: string;
-  whatsapp?: string;
-  instagram?: string;
-};
-
-export default function ProjectCard({ project }: { project: Project }) {
-  // ajuste a base se seu path for outro
-  const href = `/projetos-sociais/${project.slug}`;
-
-  return (
-    <div className="rounded-2xl bg-neutral-900 p-5 shadow-lg flex flex-col">
-      {/* BLOCO CLICÁVEL */}
-      <Link href={href} className="group block">
-        {project.image && (
-          <div className="overflow-hidden rounded-xl mb-4">
-            <img
-              src={project.image}
-              alt={project.name}
-              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            />
-          </div>
-        )}
-        <h3 className="text-lg font-bold group-hover:underline">{project.name}</h3>
-        {project.subtitle && <p className="text-sm text-white/70">{project.subtitle}</p>}
-        {project.description && <p className="text-sm text-white/70 mt-1">{project.description}</p>}
-      </Link>
-
-      {/* AÇÕES */}
-      <div className="mt-4 flex items-center justify-between">
-        {project.whatsapp && (
-          <Link
-            href={`https://wa.me/${project.whatsapp}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-red-600 hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500/60"
-          >
-            WhatsApp
-          </Link>
-        )}
-
-        {project.instagram && (
-          <a
-            href={project.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Instagram de ${project.name}`}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 hover:border-white/30 hover:bg-white/5 transition focus:outline-none focus:ring-2 focus:ring-white/20"
-            title="Instagram"
-          >
-            <Instagram className="h-5 w-5" />
-          </a>
-        )}
-      </div>
-    </div>
-  );
-}
+export const PROJECTS: Project[] = [
+  {
+    slug: "alto-do-macaco",
+    name: "Projeto Social",
+    subtitle: "Alto do Macaco — Itapuã, Salvador – BA",
+    image: "/projetos/alto-do-macaco.jpg", // ajuste o caminho real
+    whatsapp: WHATSAPP_ALTO_DO_MACACO,
+    instagram: "https://instagram.com/bruxoteam_itapuaaltodomacaco",
+  },
+  {
+    slug: "rua-da-ilha",
+    name: "Projeto Social",
+    subtitle: "Rua da Ilha — Itapuã, Salvador – BA",
+    image: "/projetos/rua-da-ilha.jpg",
+    whatsapp: WHATSAPP_MATRIZ,
+    instagram: "https://instagram.com/bruxoteam_ruadailha",
+  },
+  {
+    slug: "nova-brasilia-de-itapua",
+    name: "Projeto Social",
+    subtitle: "Nova Brasília de Itapuã — Salvador – BA",
+    image: "/projetos/nova-brasilia-de-itapua.jpg",
+    whatsapp: WHATSAPP_MATRIZ,
+    instagram: "https://instagram.com/bruxoteam_novabrasiliadeitapua",
+  },
+];
