@@ -1,5 +1,3 @@
-// data/units.ts
-
 // --------------------------------------
 // Dias da semana (chaves do cronograma)
 // --------------------------------------
@@ -53,6 +51,8 @@ export type UnitDetail = {
   state?: string;
   phone?: string;
   whatsapp?: string;
+  /** URL do Instagram da unidade (ex.: https://instagram.com/bruxoteam) */
+  instagram?: string;
 
   // Texto/SEO (opcionais)
   description?: string;
@@ -86,29 +86,22 @@ export const UNITS: UnitDetail[] = [
       title: 'Unidade Matriz — Bruxo Team',
       description: 'Conheça a unidade Matriz da Bruxo Team.',
     },
-    heroImage: '/stella.jpeg',
+    heroImage: '/bx.jpg',
     mapQuery: 'Unidade Matriz Bruxo Team, Alameda Dilson Jatahy Fonseca 858 - Stella Maris, Salvador - BA',
     address: 'Alameda Dilson Jatahy Fonseca, 858 - Stella Maris',
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571991843706',
+    instagram: 'https://instagram.com/', // preencha o link real
     gallery: [
-      { src: '/stella.jpeg',   alt: 'Bruxo Team — Matriz (fachada)' },
-      { src: '/stella2.jpeg',  alt: 'Bruxo Team — Matriz (tatame 1)' },
-      { src: '/stella3.jpeg',  alt: 'Bruxo Team — Matriz (aula em andamento)' },
+      { src: '/bx2.jpg', alt: 'Bruxo Team — Matriz (fachada)' },
+      { src: '/bx3.jpg', alt: 'Bruxo Team — Matriz (tatame 1)' },
+      { src: '/bx4.jpg', alt: 'Bruxo Team — Matriz (aula em andamento)' },
     ],
     instructors: [
-      {
-        name: 'Tiago Bruxo',
-        role: 'Mestre',
-        image: '/bruxo.jpeg',
-      },
-      {
-        name: 'Jean Ribeiro',
-        role: 'Mestre Kids',
-        image: '/jotape.jpeg',
-      }
-    ]
+      { name: 'Tiago Bruxo', role: 'Mestre', image: '/bruxo.jpeg' },
+      { name: 'Jean Ribeiro', role: 'Mestre Kids', image: '/jotape.jpeg' },
+    ],
   },
   {
     slug: 'stiep',
@@ -125,18 +118,15 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571992813525',
+    instagram: 'https://instagram.com/',
     gallery: [
-      { src: '/stiep.jpeg',   alt: 'Bruxo Team — Stiep (fachada)' },
-      { src: '/stiep2.jpeg',  alt: 'Bruxo Team — Stiep (tatame 1)' },
-      { src: '/bruxo3.jpeg',  alt: 'Bruxo Team — Stiep (aula em andamento)' },
+      { src: '/stiep.jpeg', alt: 'Bruxo Team — Stiep (fachada)' },
+      { src: '/stiep2.jpeg', alt: 'Bruxo Team — Stiep (tatame 1)' },
+      { src: '/bruxo3.jpeg', alt: 'Bruxo Team — Stiep (aula em andamento)' },
     ],
     instructors: [
-      {
-        name: 'Ybere Camargo',
-        role: 'Mestre',
-        image: '/ybere.jpeg',
-      }
-    ]
+      { name: 'Ybere Camargo', role: 'Mestre', image: '/ybere.jpeg' },
+    ],
   },
   {
     slug: 'itapua',
@@ -153,26 +143,17 @@ export const UNITS: UnitDetail[] = [
     city: 'Salvador',
     state: 'BA',
     whatsapp: '5571984708998',
+    instagram: 'https://instagram.com/',
     gallery: [
-      { src: '/f.jpeg',  alt: 'Bruxo Team — Itapuã (fachada)' },
+      { src: '/f.jpeg', alt: 'Bruxo Team — Itapuã (fachada)' },
       { src: '/f2.jpeg', alt: 'Bruxo Team — Itapuã (tatame 1)' },
       { src: '/f4.jpeg', alt: 'Bruxo Team — Itapuã (aula em andamento)' },
     ],
     instructors: [
-      {
-        name: 'Flavio Barros',
-        role: 'Mestre',
-        image: '/fl.jpeg',
-        imagePos: 'center top', // 👉 foca no topo para não cortar a cabeça
-      },
-      {
-        name: 'Thiago Bruxo',
-        role: 'Mestre',
-        image: '/bruxo.jpeg',
-      },
+      { name: 'Flavio Barros', role: 'Mestre', image: '/fl.jpeg', imagePos: 'center top' },
+      { name: 'Thiago Bruxo', role: 'Mestre', image: '/bruxo.jpeg' },
     ],
   },
-  // ---------- NOVO: Núcleo Itacaré ----------
   {
     slug: 'itacare',
     name: 'Núcleo Itacaré',
@@ -188,8 +169,9 @@ export const UNITS: UnitDetail[] = [
     city: 'Itacaré',
     state: 'BA',
     whatsapp: '5571988644981',
+    instagram: 'https://instagram.com/',
     gallery: [
-      { src: '/y1.jpeg',  alt: 'Bruxo Team — Itacaré (fachada)' },
+      { src: '/y1.jpeg', alt: 'Bruxo Team — Itacaré (fachada)' },
       { src: '/y2.jpeg', alt: 'Bruxo Team — Itacaré (tatame)' },
       { src: '/y3.jpeg', alt: 'Bruxo Team — Itacaré (aula em andamento)' },
     ],
