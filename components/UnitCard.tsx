@@ -1,69 +1,58 @@
-// components/UnitCard.tsx
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
+import { Instagram } from "lucide-react";
 import type { UnitDetail } from "@/data/units";
-import { waLink } from "@/lib/whatsapp";
 
 export default function UnitCard({ unit }: { unit: UnitDetail }) {
-  // fallbacks
-  const hero = unit.heroImage ?? "/images/unidades/placeholder.jpg";
-  const address = unit.address ?? "Endereço em breve";
-  const mapQuery = unit.mapQuery ?? null;
-  const wa = unit.whatsapp ?? null;
+  // typedRoutes-friendly
+  const href = {
+    pathname: "/unidades/[slug]" as const,
+    query: { slug: unit.slug },
+  };
 
   return (
-    <div className="card p-5 flex flex-col gap-4">
-      <Link
-        href={`/unidades/${unit.slug}`}
-        className="block aspect-video rounded-xl overflow-hidden bg-white/5"
-        aria-label={`Abrir página da ${unit.name}`}
-      >
-        <Image
-          src={hero} // sempre string
-          alt={`Foto da ${unit.name}`}
-          width={1200}
-          height={800}
-          className="w-full h-full object-cover"
-          priority={false}
-        />
-      </Link>
-
-      <div className="flex-1">
-        <h3 className="h3">{unit.name}</h3>
-        <p className="p mt-2">{address}</p>
-
-        {mapQuery && (
-          <div className="mt-4">
-            <iframe
-              className="w-full h-40 rounded-xl border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`}
-              title={`Mapa da ${unit.name}`}
+    <div className="rounded-2xl bg-neutral-900 p-5 shadow-lg flex flex-col">
+      <Link href={href} className="group block">
+        {unit.heroImage && (
+          <div className="overflow-hidden rounded-xl mb-4">
+            <img
+              src={unit.heroImage}
+              alt={unit.name}
+              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
           </div>
         )}
-      </div>
+        <h3 className="text-lg font-bold group-hover:underline">{unit.name}</h3>
+        {unit.description && (
+          <p className="text-sm text-white/70 mt-1">{unit.description}</p>
+        )}
+      </Link>
 
-      <div className="mt-2 flex gap-3">
-        {wa ? (
-          <a
-            className="btn-primary flex-1 text-center"
-            href={waLink(wa, `Quero treinar na ${unit.name}`)}
+      <div className="mt-4 flex items-center justify-between">
+        {unit.whatsapp && (
+          <Link
+            href={`https://wa.me/${unit.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold bg-red-600 hover:bg-red-700 transition"
           >
-            Inscrever no WhatsApp
-          </a>
-        ) : (
-          <button className="btn-primary flex-1 opacity-60 cursor-not-allowed" disabled>
-            WhatsApp indisponível
-          </button>
+            WhatsApp
+          </Link>
         )}
 
-        <Link className="btn-secondary" href={`/unidades/${unit.slug}`}>
-          Detalhes
-        </Link>
+        {unit.instagram && (
+          <a
+            href={unit.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Instagram da ${unit.name}`}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 hover:border-white/30 hover:bg-white/5 transition"
+            title="Instagram"
+          >
+            <Instagram className="h-5 w-5" />
+          </a>
+        )}
       </div>
     </div>
   );
